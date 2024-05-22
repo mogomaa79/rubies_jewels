@@ -1,1 +1,1 @@
-FINALIZE INDEX (imgs, urls, redirects, buttons)
+FINALIZE SHOP (urls, buttons, etc.)

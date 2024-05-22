@@ -898,9 +898,9 @@ a:focus {
 }
 
 .info_section .info_insta .insta_box .img-box {
-  width: 65px;
-  min-width: 65px;
-  height: 65px;
+  width: 90px;
+  min-width: 90px;
+  height: 90px;
   padding: 10px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -916,7 +916,7 @@ a:focus {
 }
 
 .info_section .info_insta .insta_box .img-box img {
-  max-width: 100%;
+  max-width: 120%;
   max-height: 100%;
 }
 

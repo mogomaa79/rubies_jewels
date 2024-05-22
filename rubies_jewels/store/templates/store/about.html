@@ -1,0 +1,227 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/gif" />
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>Rubies Jewels</title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+  <!-- font awesome style -->
+  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+</head>
+
+<body>
+
+  <!-- header section strats -->
+  <header class="header_section innerpage_header">
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg custom_nav-container">
+        <a class="navbar-brand" href="{% url 'index' %}"></a>
+          <span>
+            Rubies Jewels
+          </span>
+        </a>
+        <div class="" id="">
+
+          <div class="custom_menu-btn">
+            <button onclick="openNav()">
+              <span class="s-1"> </span>
+              <span class="s-2"> </span>
+              <span class="s-3"> </span>
+            </button>
+            <div id="myNav" class="overlay">
+              <div class="overlay-content">
+                <a href="{% url 'index' %}">Home</a>
+                <a href="{% url 'about' %}">About</a>
+                <a href="{% url 'shop' %}">Shop</a>
+                <a href="{% url 'blog' %}">Blog</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </nav>
+    </div>
+  </header>
+  <!-- end header section -->
+
+  <!-- about section -->
+
+  <section class="about_section  layout_padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="img-box">
+            <img src="https://instagram.fcai2-2.fna.fbcdn.net/v/t39.30808-6/436262058_17848973928212146_6184317557271082918_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE4MDAuc2RyLmYzMDgwOCJ9&_nc_ht=instagram.fcai2-2.fna.fbcdn.net&_nc_cat=110&_nc_ohc=bsKtHEbGLI4Q7kNvgG1j5nu&edm=ANTKIIoAAAAA&ccb=7-5&oh=00_AYDhLq8i8CCbPD2ZGGAolYKmbd8DybjjtacOtNmWVWKi2Q&oe=6652E1AC&_nc_sid=cf751b" alt="" style="width: 50%; height: 50%;">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="detail-box">
+            <div class="heading_container">
+              <h2>
+                About Us
+              </h2>
+            </div>
+            <p>
+              ❝𝐑𝐮𝐛𝐢𝐞𝐬 𝐰𝐚𝐬 𝐦𝐚𝐝𝐞 𝐟𝐨𝐫 𝐲𝐨𝐮𝐫 𝐚𝐟𝐟𝐨𝐫𝐝𝐚𝐛𝐥𝐞 𝐯𝐢𝐧𝐭𝐚𝐠𝐞 𝐣𝐞𝐰𝐞𝐥𝐫𝐲 𝐭𝐨 𝐞𝐥𝐞𝐯𝐚𝐭𝐞 𝐲𝐨𝐮𝐫 𝐞𝐯𝐞𝐫𝐲𝐝𝐚𝐲 𝐬𝐭𝐲𝐥𝐞 𝐞𝐟𝐟𝐨𝐫𝐭𝐥𝐞𝐬𝐬𝐥𝐲❞
+              • Rust free jewelry💧
+            </p>
+            <a href="">
+              Read More
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end about section -->
+
+  <!-- info section -->
+  <section class="info_section layout_padding2">
+    <div class="container">
+      <div class="row info_form_social_row">
+        <div class="col-md-8 col-lg-9">
+          <div class="info_form">
+            <form action="">
+              <input type="email" placeholder="Enter your email">
+              <button>
+                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-3">
+
+          <div class="social_box">
+            <a href="">
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-twitter" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-linkedin" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row info_main_row">
+        <div class="col-md-6 col-lg-3">
+          <div class="info_links">
+            <h4>
+              Menu
+            </h4>
+            <div class="info_links_menu">
+              <a href="{% url 'index' %}">Home</a>
+              <a href="{% url 'about' %}">About</a>
+              <a href="{% url 'shop' %}">Shop</a>
+              <a href="{% url 'blog' %}">Blog</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="info_insta">
+            <h4>
+              Instagram
+            </h4>
+            <div class="insta_box">
+              <div class="img-box">
+                <img src="https://instagram.fcai2-2.fna.fbcdn.net/v/t39.30808-6/436262058_17848973928212146_6184317557271082918_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE4MDAuc2RyLmYzMDgwOCJ9&_nc_ht=instagram.fcai2-2.fna.fbcdn.net&_nc_cat=110&_nc_ohc=bsKtHEbGLI4Q7kNvgG1j5nu&edm=ANTKIIoAAAAA&ccb=7-5&oh=00_AYDhLq8i8CCbPD2ZGGAolYKmbd8DybjjtacOtNmWVWKi2Q&oe=6652E1AC&_nc_sid=cf751b" alt="">
+              </div>
+              <p>
+                long established fact that a reader
+              </p>
+            </div>
+            <div class="insta_box">
+              <div class="img-box">
+                <img src="https://instagram.fcai2-2.fna.fbcdn.net/v/t39.30808-6/436262058_17848973928212146_6184317557271082918_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE4MDAuc2RyLmYzMDgwOCJ9&_nc_ht=instagram.fcai2-2.fna.fbcdn.net&_nc_cat=110&_nc_ohc=bsKtHEbGLI4Q7kNvgG1j5nu&edm=ANTKIIoAAAAA&ccb=7-5&oh=00_AYDhLq8i8CCbPD2ZGGAolYKmbd8DybjjtacOtNmWVWKi2Q&oe=6652E1AC&_nc_sid=cf751b" alt="">
+              </div>
+              <p>
+                long established fact that a reader
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="info_detail">
+            <h4>
+              About Us
+            </h4>
+            <p class="mb-0">
+              when looking at its layout.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <h4>
+            Contact Us
+          </h4>
+          <div class="info_contact">
+            <a href="">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <span>
+                Location
+              </span>
+            </a>
+            <a href="">
+              <i class="fa fa-phone" aria-hidden="true"></i>
+              <span>
+                Call +01 1010101101
+              </span>
+            </a>
+            <a href="">
+              <i class="fa fa-envelope"></i>
+              <span>
+                sheikh@jackson.com
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end info_section -->
+
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <p>
+        &copy; <span id="displayYear">{{ year }}</span> All Rights Reserved By
+        <a>Rubies Jewels</a>
+      </p>
+    </div>
+  </footer>
+  <!-- footer section -->
+
+
+  <!-- jQery -->
+  <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <!-- bootstrap js -->
+  <script src="{% static 'js/bootstrap.js' %}"></script>
+  <!-- custom js -->
+  <script src="{% static 'js/custom.js' %}"></script>
+
+</body>
+
+</html>

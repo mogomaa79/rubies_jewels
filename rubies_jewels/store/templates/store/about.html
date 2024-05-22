@@ -35,7 +35,7 @@
     <div class="container-fluid">
       <nav class="navbar navbar-expand-lg custom_nav-container">
         <a class="navbar-brand" href="{% url 'index' %}"></a>
-          <span>
+          <span style="color: bisque; font-weight: 700;">
             Rubies Jewels
           </span>
         </a>
@@ -70,7 +70,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="img-box">
-            <img src="https://instagram.fcai2-2.fna.fbcdn.net/v/t39.30808-6/436262058_17848973928212146_6184317557271082918_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE4MDAuc2RyLmYzMDgwOCJ9&_nc_ht=instagram.fcai2-2.fna.fbcdn.net&_nc_cat=110&_nc_ohc=bsKtHEbGLI4Q7kNvgG1j5nu&edm=ANTKIIoAAAAA&ccb=7-5&oh=00_AYDhLq8i8CCbPD2ZGGAolYKmbd8DybjjtacOtNmWVWKi2Q&oe=6652E1AC&_nc_sid=cf751b" alt="" style="width: 50%; height: 50%;">
+            <img src="https://scontent.fcai2-1.fna.fbcdn.net/v/t39.30808-6/438078793_122108767820288095_1998401265173355279_n.jpg?stp=dst-jpg_s2048x2048&_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=8CRHFNKHo7YQ7kNvgGIcCog&_nc_ht=scontent.fcai2-1.fna&oh=00_AYCobRyVhzYAuzQVlHBCCWHVxi2IFuQk3lct3v06ZfRUMA&oe=6653AF9F" alt="">
           </div>
         </div>
         <div class="col-md-6">
@@ -81,11 +81,10 @@
               </h2>
             </div>
             <p>
-              ❝𝐑𝐮𝐛𝐢𝐞𝐬 𝐰𝐚𝐬 𝐦𝐚𝐝𝐞 𝐟𝐨𝐫 𝐲𝐨𝐮𝐫 𝐚𝐟𝐟𝐨𝐫𝐝𝐚𝐛𝐥𝐞 𝐯𝐢𝐧𝐭𝐚𝐠𝐞 𝐣𝐞𝐰𝐞𝐥𝐫𝐲 𝐭𝐨 𝐞𝐥𝐞𝐯𝐚𝐭𝐞 𝐲𝐨𝐮𝐫 𝐞𝐯𝐞𝐫𝐲𝐝𝐚𝐲 𝐬𝐭𝐲𝐥𝐞 𝐞𝐟𝐟𝐨𝐫𝐭𝐥𝐞𝐬𝐬𝐥𝐲❞
-              • Rust free jewelry💧
+              Rubies was made for your affordable vintage jewelery to elevate your everyday style effortlessly. We are a small business that started in 2021 and we are based in Cairo, Egypt. We are dedicated to providing you with the best quality of jewelery that is affordable and stylish. We are always looking for ways to improve our products and services to make sure that you are satisfied with your purchase.
             </p>
-            <a href="">
-              Read More
+            <a href="{% url 'shop' %}">
+              Shop Now
             </a>
           </div>
         </div>
@@ -101,25 +100,28 @@
       <div class="row info_form_social_row">
         <div class="col-md-8 col-lg-9">
           <div class="info_form">
-            <form action="">
-              <input type="email" placeholder="Enter your email">
-              <button>
+            <form action="{% url 'handle_email' %}" method="post">
+              {% csrf_token %}
+              <input type="email" name="email" placeholder="Enter your email">
+              <button type="submit">
                 <i class="fa fa-arrow-right" aria-hidden="true"></i>
               </button>
             </form>
           </div>
+          {% if message %}
+          <div class="alert alert-success" role="alert">
+            {{ message }}
+          </div>
+          {% endif %}
         </div>
         <div class="col-md-4 col-lg-3">
 
           <div class="social_box">
-            <a href="">
+            <a href="https://www.facebook.com/people/Rubies-Jewels/61558642868319/">
               <i class="fa fa-facebook" aria-hidden="true"></i>
             </a>
-            <a href="">
-              <i class="fa fa-twitter" aria-hidden="true"></i>
-            </a>
-            <a href="">
-              <i class="fa fa-linkedin" aria-hidden="true"></i>
+            <a href="https://www.instagram.com/rubiesjewelss/">
+              <i class="fa fa-instagram" aria-hidden="true"></i>
             </a>
           </div>
         </div>
@@ -138,39 +140,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="info_insta">
-            <h4>
-              Instagram
-            </h4>
-            <div class="insta_box">
-              <div class="img-box">
-                <img src="https://instagram.fcai2-2.fna.fbcdn.net/v/t39.30808-6/436262058_17848973928212146_6184317557271082918_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE4MDAuc2RyLmYzMDgwOCJ9&_nc_ht=instagram.fcai2-2.fna.fbcdn.net&_nc_cat=110&_nc_ohc=bsKtHEbGLI4Q7kNvgG1j5nu&edm=ANTKIIoAAAAA&ccb=7-5&oh=00_AYDhLq8i8CCbPD2ZGGAolYKmbd8DybjjtacOtNmWVWKi2Q&oe=6652E1AC&_nc_sid=cf751b" alt="">
-              </div>
-              <p>
-                long established fact that a reader
-              </p>
-            </div>
-            <div class="insta_box">
-              <div class="img-box">
-                <img src="https://instagram.fcai2-2.fna.fbcdn.net/v/t39.30808-6/436262058_17848973928212146_6184317557271082918_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE4MDAuc2RyLmYzMDgwOCJ9&_nc_ht=instagram.fcai2-2.fna.fbcdn.net&_nc_cat=110&_nc_ohc=bsKtHEbGLI4Q7kNvgG1j5nu&edm=ANTKIIoAAAAA&ccb=7-5&oh=00_AYDhLq8i8CCbPD2ZGGAolYKmbd8DybjjtacOtNmWVWKi2Q&oe=6652E1AC&_nc_sid=cf751b" alt="">
-              </div>
-              <p>
-                long established fact that a reader
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="info_detail">
-            <h4>
-              About Us
-            </h4>
-            <p class="mb-0">
-              when looking at its layout.
-            </p>
-          </div>
-        </div>
+
         <div class="col-md-6 col-lg-3">
           <h4>
             Contact Us
@@ -179,7 +149,7 @@
             <a href="">
               <i class="fa fa-map-marker" aria-hidden="true"></i>
               <span>
-                Location
+                Sheikh Zayed, Giza, Egypt
               </span>
             </a>
             <a href="">
@@ -188,10 +158,10 @@
                 Call +01 1010101101
               </span>
             </a>
-            <a href="">
+            <a href="mailto:support@rubiesjewels.com">
               <i class="fa fa-envelope"></i>
               <span>
-                sheikh@jackson.com
+                support@rubiesjewels.com
               </span>
             </a>
           </div>

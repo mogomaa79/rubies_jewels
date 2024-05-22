@@ -1,2 +1,1 @@
-FINALIZE ABOUT (imgs, urls, redirects, buttons)
-FINALIZE INDEX
+FINALIZE INDEX (imgs, urls, redirects, buttons)

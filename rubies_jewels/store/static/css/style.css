@@ -790,7 +790,7 @@ a:focus {
   height: 50px;
   padding-left: 15px;
   outline: none;
-  color: #ffffff;
+  color: #000000;
   border: none;
   border-bottom: 1px solid #fd9c6b;
 }

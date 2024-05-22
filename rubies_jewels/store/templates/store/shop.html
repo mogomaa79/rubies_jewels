@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 
@@ -8,7 +10,7 @@
   <!-- Mobile Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <!-- Site Metas -->
-  <link rel="icon" href="images/favicon.png" type="image/gif" />
+  <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/gif" />
   <meta name="keywords" content="" />
   <meta name="description" content="" />
   <meta name="author" content="" />
@@ -16,13 +18,13 @@
   <title>Rubies Jewels</title>
 
   <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
   <!-- font awesome style -->
-  <link href="css/font-awesome.min.css" rel="stylesheet" />
+  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
   <!-- Custom styles for this template -->
-  <link href="css/style.css" rel="stylesheet" />
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
   <!-- responsive style -->
-  <link href="css/responsive.css" rel="stylesheet" />
+  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
 
 </head>
 
@@ -32,10 +34,8 @@
   <header class="header_section innerpage_header">
     <div class="container-fluid">
       <nav class="navbar navbar-expand-lg custom_nav-container">
-        <a class="navbar-brand" href="index.html">
-          <span>
-            Rubies Jewels
-          </span>
+        <a class="navbar-brand" href="{% url 'index' %}"></a>
+            <a href="{% url 'index' %}" style="color: bisque; font-weight: 700;">Rubies Jewels</a>
         </a>
         <div class="" id="">
 
@@ -47,10 +47,9 @@
             </button>
             <div id="myNav" class="overlay">
               <div class="overlay-content">
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="shop.html">Shop</a>
-                <a href="blog.html">Blog</a>
+                <a href="{% url 'index' %}">Home</a>
+                <a href="{% url 'about' %}">About</a>
+                <a href="{% url 'shop' %}">Shop</a>
               </div>
             </div>
           </div>
@@ -61,252 +60,157 @@
   </header>
   <!-- end header section -->
 
-  <!-- shop section -->
+    <!-- shop section -->
 
-  <section class="shop_section layout_padding">
-    <div class="container">
-      <div class="heading_container heading_center">
-        <h2>
-          Latest Products
-        </h2>
+    <section class="shop_section layout_padding">
+      <div class="container">
+        <div class="heading_container heading_center">
+          <h2>
+            Latest Products
+          </h2>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="box">
+              <a href="">
+                <div class="img-box">
+                  <img src="https://instagram.fcai2-2.fna.fbcdn.net/v/t39.30808-6/443717286_17848973226212146_3170449389494765429_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE3NTIuc2RyLmYzMDgwOCJ9&_nc_ht=instagram.fcai2-2.fna.fbcdn.net&_nc_cat=110&_nc_ohc=ED7_QBN6pnUQ7kNvgGjlcwZ&edm=ANTKIIoAAAAA&ccb=7-5&oh=00_AYCkI0WEjoAxc__sWsN-Fn025jtnBLNQgec7ksR3OPMm9Q&oe=6653A559&_nc_sid=cf751b" alt="">
+                </div>
+                <div class="detail-box">
+                  <h6>
+                    Eclipse Ring
+                  </h6>
+                  <h6>
+                    Price
+                    <span>
+                      $200
+                    </span>
+                  </h6>
+                </div>
+                <div class="new">
+                  <span>
+                    New
+                  </span>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="box">
+              <a href="">
+                <div class="img-box">
+                  <img src="https://instagram.fcai2-2.fna.fbcdn.net/v/t39.30808-6/443712589_17848960848212146_3395952724601135561_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE2MDUuc2RyLmYzMDgwOCJ9&_nc_ht=instagram.fcai2-2.fna.fbcdn.net&_nc_cat=110&_nc_ohc=LJmOcILceCcQ7kNvgHKoB1U&edm=ANTKIIoAAAAA&ccb=7-5&oh=00_AYAziwrNMABOObVzH-N9TSlQAB-ugTYGzC66eOzn__x4bA&oe=6653AF70&_nc_sid=cf751b" alt="">
+                </div>
+                <div class="detail-box">
+                  <h6>
+                    Snakey Ring
+                  </h6>
+                  <h6>
+                    Price
+                    <span>
+                      $300
+                    </span>
+                  </h6>
+                </div>
+                <div class="new">
+                  <span>
+                    New
+                  </span>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="box">
+              <a href="">
+                <div class="img-box">
+                  <img src="https://instagram.fcai2-2.fna.fbcdn.net/v/t39.30808-6/444146045_17848805583212146_7923775098155219041_n.jpg?stp=dst-jpg_e35_p750x750_sh0.08&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE4MDAuc2RyLmYzMDgwOCJ9&_nc_ht=instagram.fcai2-2.fna.fbcdn.net&_nc_cat=110&_nc_ohc=O87N_SsEzykQ7kNvgGG_TX_&edm=ANTKIIoAAAAA&ccb=7-5&oh=00_AYCt_vqx5SNZPkymfTZMiUx1Jt6-eiGFZ-czYdfSpDgRmg&oe=6653B5B9&_nc_sid=cf751b" alt="">
+                </div>
+                <div class="detail-box">
+                  <h6>
+                    Bold Bangle
+                  </h6>
+                  <h6>
+                    Price
+                    <span>
+                      $110
+                    </span>
+                  </h6>
+                </div>
+                <div class="new">
+                  <span>
+                    New
+                  </span>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="box">
+              <a href="">
+                <div class="img-box">
+                  <img src="https://instagram.fcai2-2.fna.fbcdn.net/v/t39.30808-6/444203255_17848973325212146_1237152302162001345_n.jpg?stp=dst-jpg_e35_p750x750_sh0.08&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE3OTkuc2RyLmYzMDgwOCJ9&_nc_ht=instagram.fcai2-2.fna.fbcdn.net&_nc_cat=110&_nc_ohc=G9beKQzMAR0Q7kNvgGKapEE&edm=ANTKIIoAAAAA&ccb=7-5&oh=00_AYAquYp5JLaPqH-roroEA6GILACJdS8IuN-GfEbxO5c-Sg&oe=66539F5E&_nc_sid=cf751b" alt="">
+                </div>
+                <div class="detail-box">
+                  <h6>
+                    Double Strand Ring
+                  </h6>
+                  <h6>
+                    Price
+                    <span>
+                      $45
+                    </span>
+                  </h6>
+                </div>
+                <div class="new">
+                  <span>
+                    New
+                  </span>
+                </div>
+              </a>
+            </div>
+          </div>
+    
+          </div>
+  
+        </div>
+        <div class="btn-box">
+          <a href="">
+            View All Products
+          </a>
       </div>
-      <div class="row">
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="https://instagram.fcai2-2.fna.fbcdn.net/v/t39.30808-6/443712589_17848960848212146_3395952724601135561_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE2MDUuc2RyLmYzMDgwOCJ9&_nc_ht=instagram.fcai2-2.fna.fbcdn.net&_nc_cat=110&_nc_ohc=LJmOcILceCcQ7kNvgHKoB1U&edm=ANTKIIoAAAAA&ccb=7-5&oh=00_AYA1lPCvd-JkZUuHxwo6xKbkKsGZ_uzEZ3rxZBqxXSIzLA&oe=66537730&_nc_sid=cf751b" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Necklace
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $200
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="https://instagram.fcai2-1.fna.fbcdn.net/v/t51.29350-15/436352484_432222829448792_2493675186074317973_n.jpg?stp=dst-jpg_e35_p1080x1080&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE1ODIuc2RyLmYyOTM1MCJ9&_nc_ht=instagram.fcai2-1.fna.fbcdn.net&_nc_cat=108&_nc_ohc=0V5VRYXEZsMQ7kNvgG0BTuA&edm=ANTKIIoBAAAA&ccb=7-5&oh=00_AYBK2iNHEIeLohZwoO3VgmjRAknqndiNEPPT1ZPPoP4dKw&oe=66538DCA&_nc_sid=cf751b" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Necklace
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $300
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p3.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Necklace
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $110
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p4.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Ring
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $45
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p5.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Ring
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $95
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p6.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Earrings
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $70
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p7.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Earrings
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $400
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p8.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Necklace
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $450
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="btn-box">
-        <a href="">
-          View All Products
-        </a>
-      </div>
-    </div>
-  </section>
+    </section>
+  
+    <!-- end shop section -->
 
-  <!-- end shop section -->
-
-  <!-- info section -->
-  <section class="info_section layout_padding2">
+ <!-- info section -->
+   <section class="info_section layout_padding2">
     <div class="container">
       <div class="row info_form_social_row">
         <div class="col-md-8 col-lg-9">
           <div class="info_form">
-            <form action="">
-              <input type="email" placeholder="Enter your email">
-              <button>
+            <form action="{% url 'handle_email' %}" method="post">
+              {% csrf_token %}
+              <input type="email" name="email" placeholder="Enter your email">
+              <button type="submit">
                 <i class="fa fa-arrow-right" aria-hidden="true"></i>
               </button>
             </form>
           </div>
+          {% if message %}
+          <div class="alert alert-success" role="alert">
+            {{ message }}
+          </div>
+          {% endif %}
         </div>
         <div class="col-md-4 col-lg-3">
 
           <div class="social_box">
-            <a href="">
+            <a href="https://www.facebook.com/people/Rubies-Jewels/61558642868319/">
               <i class="fa fa-facebook" aria-hidden="true"></i>
             </a>
-            <a href="">
-              <i class="fa fa-twitter" aria-hidden="true"></i>
-            </a>
-            <a href="">
-              <i class="fa fa-linkedin" aria-hidden="true"></i>
+            <a href="https://www.instagram.com/rubiesjewelss/">
+              <i class="fa fa-instagram" aria-hidden="true"></i>
             </a>
           </div>
         </div>
@@ -318,46 +222,13 @@
               Menu
             </h4>
             <div class="info_links_menu">
-              <a href="index.html">Home</a>
-              <a href="about.html">About</a>
-              <a href="shop.html">Shop</a>
-              <a href="blog.html">Blog</a>
+              <a href="{% url 'index' %}">Home</a>
+              <a href="{% url 'about' %}">About</a>
+              <a href="{% url 'shop' %}">Shop</a>
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="info_insta">
-            <h4>
-              Instagram
-            </h4>
-            <div class="insta_box">
-              <div class="img-box">
-                <img src="images/p1.png" alt="">
-              </div>
-              <p>
-                long established fact that a reader
-              </p>
-            </div>
-            <div class="insta_box">
-              <div class="img-box">
-                <img src="images/p2.png" alt="">
-              </div>
-              <p>
-                long established fact that a reader
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="info_detail">
-            <h4>
-              About Us
-            </h4>
-            <p class="mb-0">
-              when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to
-            </p>
-          </div>
-        </div>
+
         <div class="col-md-6 col-lg-3">
           <h4>
             Contact Us
@@ -366,19 +237,19 @@
             <a href="">
               <i class="fa fa-map-marker" aria-hidden="true"></i>
               <span>
-                Location
+                Sheikh Zayed, Giza, Egypt
               </span>
             </a>
             <a href="">
               <i class="fa fa-phone" aria-hidden="true"></i>
               <span>
-                Call +01 1234567890
+                Call +01 1010101101
               </span>
             </a>
-            <a href="">
+            <a href="mailto:support@rubiesjewels.com">
               <i class="fa fa-envelope"></i>
               <span>
-                demo@gmail.com
+                support@rubiesjewels.com
               </span>
             </a>
           </div>
@@ -394,20 +265,21 @@
   <footer class="footer_section">
     <div class="container">
       <p>
-        &copy; <span id="displayYear"></span> All Rights Reserved By
-        <a href="https://html.design/">Free Html Templates</a>
+        &copy; <span id="displayYear">{{ year }}</span> All Rights Reserved By
+        <a>Rubies Jewels</a>
       </p>
     </div>
   </footer>
   <!-- footer section -->
 
 
+
   <!-- jQery -->
-  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
   <!-- bootstrap js -->
-  <script src="js/bootstrap.js"></script>
+  <script src="{% static 'js/bootstrap.js' %}"></script>
   <!-- custom js -->
-  <script src="js/custom.js"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
 
 </body>
 

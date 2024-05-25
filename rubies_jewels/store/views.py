@@ -2,11 +2,14 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.messages import get_messages
-from .models import Email
+from .models import *
 
 
 def index(request):
-    return render(request, 'store/index.html')
+    # query to get the latest 4 products
+    products = Product.objects.all().order_by('-id')[:4]
+    print(products)
+    return render(request, 'store/index.html', {'products': products})
 
 def about(request):
     storage = get_messages(request)
@@ -17,9 +20,6 @@ def about(request):
 
 def shop(request):
     return render(request, 'store/shop.html')
-
-def blog(request):
-    return render(request, 'store/blog.html')
 
 def handle_email(request):
     if request.method == 'POST':

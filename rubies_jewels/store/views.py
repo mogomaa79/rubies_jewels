@@ -7,8 +7,7 @@ from .models import *
 
 def index(request):
     # query to get the latest 4 products
-    products = Product.objects.all().order_by('-id')[:4]
-    print(products)
+    products = Product.objects.all().order_by('-id')[:3]
     return render(request, 'store/index.html', {'products': products})
 
 def about(request):
@@ -19,7 +18,7 @@ def about(request):
     return render(request, 'store/about.html', {'message': message})
 
 def shop(request):
-    return render(request, 'store/shop.html')
+    return render(request, 'store/shop.html', {"products": Product.objects.all()})
 
 def handle_email(request):
     if request.method == 'POST':

@@ -15,7 +15,7 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
 
-  <title>Rubies Jewels</title>
+  <title >Rubies Jewels</title>
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
@@ -34,10 +34,9 @@
   <header class="header_section innerpage_header">
     <div class="container-fluid">
       <nav class="navbar navbar-expand-lg custom_nav-container">
-        <a class="navbar-brand" href="{% url 'index' %}"></a>
-            <a href="{% url 'index' %}" style="color: bisque; font-weight: 700;">Rubies Jewels</a>
+        <a class="navbar-brand" href="{% url 'index' %}">
+          <span>Rubies Jewels</span>
         </a>
-        <div class="" id="">
 
           <div class="custom_menu-btn">
             <button onclick="openNav()">
@@ -60,129 +59,32 @@
   </header>
   <!-- end header section -->
 
-    <!-- shop section -->
-
-    <section class="shop_section layout_padding">
-      <div class="container">
-        <div class="heading_container heading_center">
-          <h2>
-            Latest Products
-          </h2>
+<!-- shop section -->
+<section class="shop_section layout_padding" style="display: flex; flex-wrap: wrap;">
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>THE COLLECTION</h2>
+    </div>
+    <div class="product-container" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+      {% for product in products %}
+        <div class="col-sm-6 col-md-4 col-lg-3 product-item" style="flex: 1 1 calc(40% - 20px); margin: 10px;">
+          <div class="box">
+            <a href="#">
+              <div class="img-box">
+                <img src="{% static 'images/products/' %}{{ product }}" loading="lazy" alt="{{ product.name }}">
+              </div>
+              <div class="detail-box">
+                <h6>{{ product.name }}</h6>
+                <span>{{ product.price }} EGP</span>
+              </div>
+            </a>
+          </div>
         </div>
-        <div class="row">
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="box">
-              <a href="">
-                <div class="img-box">
-                  <img src="https://instagram.fcai2-2.fna.fbcdn.net/v/t39.30808-6/443717286_17848973226212146_3170449389494765429_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE3NTIuc2RyLmYzMDgwOCJ9&_nc_ht=instagram.fcai2-2.fna.fbcdn.net&_nc_cat=110&_nc_ohc=ED7_QBN6pnUQ7kNvgGjlcwZ&edm=ANTKIIoAAAAA&ccb=7-5&oh=00_AYCkI0WEjoAxc__sWsN-Fn025jtnBLNQgec7ksR3OPMm9Q&oe=6653A559&_nc_sid=cf751b" alt="">
-                </div>
-                <div class="detail-box">
-                  <h6>
-                    Eclipse Ring
-                  </h6>
-                  <h6>
-                    Price
-                    <span>
-                      $200
-                    </span>
-                  </h6>
-                </div>
-                <div class="new">
-                  <span>
-                    New
-                  </span>
-                </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
 
-              </a>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="box">
-              <a href="">
-                <div class="img-box">
-                  <img src="https://instagram.fcai2-2.fna.fbcdn.net/v/t39.30808-6/443712589_17848960848212146_3395952724601135561_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE2MDUuc2RyLmYzMDgwOCJ9&_nc_ht=instagram.fcai2-2.fna.fbcdn.net&_nc_cat=110&_nc_ohc=LJmOcILceCcQ7kNvgHKoB1U&edm=ANTKIIoAAAAA&ccb=7-5&oh=00_AYAziwrNMABOObVzH-N9TSlQAB-ugTYGzC66eOzn__x4bA&oe=6653AF70&_nc_sid=cf751b" alt="">
-                </div>
-                <div class="detail-box">
-                  <h6>
-                    Snakey Ring
-                  </h6>
-                  <h6>
-                    Price
-                    <span>
-                      $300
-                    </span>
-                  </h6>
-                </div>
-                <div class="new">
-                  <span>
-                    New
-                  </span>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="box">
-              <a href="">
-                <div class="img-box">
-                  <img src="https://instagram.fcai2-2.fna.fbcdn.net/v/t39.30808-6/444146045_17848805583212146_7923775098155219041_n.jpg?stp=dst-jpg_e35_p750x750_sh0.08&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE4MDAuc2RyLmYzMDgwOCJ9&_nc_ht=instagram.fcai2-2.fna.fbcdn.net&_nc_cat=110&_nc_ohc=O87N_SsEzykQ7kNvgGG_TX_&edm=ANTKIIoAAAAA&ccb=7-5&oh=00_AYCt_vqx5SNZPkymfTZMiUx1Jt6-eiGFZ-czYdfSpDgRmg&oe=6653B5B9&_nc_sid=cf751b" alt="">
-                </div>
-                <div class="detail-box">
-                  <h6>
-                    Bold Bangle
-                  </h6>
-                  <h6>
-                    Price
-                    <span>
-                      $110
-                    </span>
-                  </h6>
-                </div>
-                <div class="new">
-                  <span>
-                    New
-                  </span>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="box">
-              <a href="">
-                <div class="img-box">
-                  <img src="https://instagram.fcai2-2.fna.fbcdn.net/v/t39.30808-6/444203255_17848973325212146_1237152302162001345_n.jpg?stp=dst-jpg_e35_p750x750_sh0.08&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE3OTkuc2RyLmYzMDgwOCJ9&_nc_ht=instagram.fcai2-2.fna.fbcdn.net&_nc_cat=110&_nc_ohc=G9beKQzMAR0Q7kNvgGKapEE&edm=ANTKIIoAAAAA&ccb=7-5&oh=00_AYAquYp5JLaPqH-roroEA6GILACJdS8IuN-GfEbxO5c-Sg&oe=66539F5E&_nc_sid=cf751b" alt="">
-                </div>
-                <div class="detail-box">
-                  <h6>
-                    Double Strand Ring
-                  </h6>
-                  <h6>
-                    Price
-                    <span>
-                      $45
-                    </span>
-                  </h6>
-                </div>
-                <div class="new">
-                  <span>
-                    New
-                  </span>
-                </div>
-              </a>
-            </div>
-          </div>
-    
-          </div>
-  
-        </div>
-        <div class="btn-box">
-          <a href="">
-            View All Products
-          </a>
-      </div>
-    </section>
-  
-    <!-- end shop section -->
 
  <!-- info section -->
    <section class="info_section layout_padding2">

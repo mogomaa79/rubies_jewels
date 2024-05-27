@@ -48,7 +48,7 @@
   <!-- slider section -->
   <section class="slider_section position-relative">
     <div class="slider_bg_box">
-      <img src="https://instagram.fcai2-2.fna.fbcdn.net/v/t39.30808-6/443712589_17848960848212146_3395952724601135561_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE2MDUuc2RyLmYzMDgwOCJ9&_nc_ht=instagram.fcai2-2.fna.fbcdn.net&_nc_cat=110&_nc_ohc=LJmOcILceCcQ7kNvgHKoB1U&edm=ANTKIIoAAAAA&ccb=7-5&oh=00_AYA1lPCvd-JkZUuHxwo6xKbkKsGZ_uzEZ3rxZBqxXSIzLA&oe=66537730&_nc_sid=cf751b" alt="">
+      <img src="{% static 'images/bg.jpg' %}" alt="">
     </div>
     <div class="slider_bg"></div>
     <div class="container">
@@ -66,14 +66,13 @@
               Shop Now
             </a>
           </div>
-        </div>
+        </div></div>
       </div>
     </div>
   </section>
   <!-- end slider section -->
 
 <!-- shop section -->
-
 <section class="shop_section layout_padding" style="display: flex; flex-wrap: wrap;">
   <div class="container">
     <div class="heading_container heading_center">
@@ -81,18 +80,15 @@
     </div>
     <div class="product-container" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
       {% for product in products %}
-        <div class="col-sm-6 col-md-4 col-lg-3" style="flex: 1 1 calc(25% - 10px); margin: 5px;">
+        <div class="col-sm-6 col-md-4 col-lg-3 product-item" style="flex: 1 1 calc(40% - 20px); margin: 12px;">
           <div class="box">
-            <a href="{{ product.image_url }}">
+            <a href="#">
               <div class="img-box">
-                <img src="{{ product.image_url }}" alt="">
+                <img src="{% static 'images/products/' %}{{ product }}" loading="lazy" alt="">
               </div>
               <div class="detail-box">
                 <h6>{{ product.name }}</h6>
-
-
-                  <span>{{ product.price }} EGP</span>
-
+                <span>{{ product.price }}</span>
               </div>
               <div class="new">
                 <span>New</span>
@@ -102,12 +98,11 @@
         </div>
       {% endfor %}
     </div>
-    <div class="btn-box" style="width: 100%; text-align: center; margin-top: 20px;">
+    <div class="btn-box">
       <a href="{% url 'shop' %}">View All Products</a>
     </div>
   </div>
 </section>
-
 
   <!-- end shop section -->
 
@@ -118,7 +113,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="img-box">
-            <img src="https://scontent.fcai2-1.fna.fbcdn.net/v/t39.30808-6/438078793_122108767820288095_1998401265173355279_n.jpg?stp=dst-jpg_s2048x2048&_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=8CRHFNKHo7YQ7kNvgGIcCog&_nc_ht=scontent.fcai2-1.fna&oh=00_AYCobRyVhzYAuzQVlHBCCWHVxi2IFuQk3lct3v06ZfRUMA&oe=6653AF9F" alt="">
+            <img src="{% static 'images/about.jpg' %}" alt="">
           </div>
         </div>
         <div class="col-md-6">

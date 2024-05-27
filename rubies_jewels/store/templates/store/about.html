@@ -34,10 +34,9 @@
   <header class="header_section innerpage_header">
     <div class="container-fluid">
       <nav class="navbar navbar-expand-lg custom_nav-container">
-        <a class="navbar-brand" href="{% url 'index' %}"></a>
-            <a href="{% url 'index' %}" style="color: bisque; font-weight: 700;">Rubies Jewels</a>
-        </a>
-        <div class="" id="">
+        <a class="navbar-brand" href="{% url 'index' %}">
+          <span>Rubies Jewels</span>
+      </a>
 
           <div class="custom_menu-btn">
             <button onclick="openNav()">
@@ -62,32 +61,29 @@
 
   <!-- about section -->
 
-  <section class="about_section  layout_padding">
+  <section class="about_section layout_padding">
     <div class="container">
-      <div class="row">
+      <div class="row align-items-center">
         <div class="col-md-6">
           <div class="img-box">
-            <img src="https://scontent.fcai2-1.fna.fbcdn.net/v/t39.30808-6/438078793_122108767820288095_1998401265173355279_n.jpg?stp=dst-jpg_s2048x2048&_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=8CRHFNKHo7YQ7kNvgGIcCog&_nc_ht=scontent.fcai2-1.fna&oh=00_AYCobRyVhzYAuzQVlHBCCWHVxi2IFuQk3lct3v06ZfRUMA&oe=6653AF9F" alt="">
+            <img src="{% static 'images/about.jpg' %}" alt="About Us Image">
           </div>
         </div>
         <div class="col-md-6">
           <div class="detail-box">
             <div class="heading_container">
-              <h2>
-                About Us
-              </h2>
+              <h2>About Us</h2>
             </div>
             <p>
-              Rubies was made for your affordable vintage jewelery to elevate your everyday style effortlessly. We are a small business that started in 2021 and we are based in Cairo, Egypt. We are dedicated to providing you with the best quality of jewelery that is affordable and stylish. We are always looking for ways to improve our products and services to make sure that you are satisfied with your purchase.
+              Rubies was made for your affordable vintage jewelry to elevate your everyday style effortlessly. We are a small business that started in 2021 and we are based in Cairo, Egypt. We are dedicated to providing you with the best quality of jewelry that is affordable and stylish. We are always looking for ways to improve our products and services to make sure that you are satisfied with your purchase.
             </p>
-            <a href="{% url 'shop' %}">
-              Shop Now
-            </a>
+            <a href="{% url 'shop' %}">Shop Now</a>
           </div>
         </div>
       </div>
     </div>
   </section>
+  
 
   <!-- end about section -->
 

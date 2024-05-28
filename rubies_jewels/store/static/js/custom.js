@@ -31,7 +31,32 @@ $(document).on("click", '[data-toggle="lightbox"]', function (event) {
 });
 
 $(document).ready(function() {
-    $('#productCarousel').carousel({
-      interval: 2000
+    $('.carousel').carousel({
+      interval: 1000
     });
   });
+
+
+$('#productCarousel').on('click', '.carousel-item img', function() {
+    var src = $(this).attr('src');
+    $('#modalImage').attr('src', src);
+    $('#imageModal').modal('show');
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var carousel = $('#productCarousel');
+    var modalImage = document.getElementById('modalImage');
+  
+    // Ensure the carousel works smoothly
+    carousel.carousel({
+      interval: 3000
+    });
+  
+    // Image click event to open modal with larger image
+    document.querySelectorAll('#productCarousel img').forEach(function(image) {
+      image.addEventListener('click', function() {
+        modalImage.src = image.src;
+      });
+    });
+  });
+  

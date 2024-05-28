@@ -26,6 +26,11 @@
   <!-- responsive style -->
   <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
 
+  <!-- jQuery and Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+
 </head>
 
 <body>
@@ -58,19 +63,16 @@
   </header>
   <!-- end header section -->
 
-  <!-- product section -->
-  <section class="product_section layout_padding">
-    <div class="container">
-      <div class="heading_container heading_center">
-        <h2>{{ product.name }}</h2>
-        <p>{{ product.price }} EGP</p>
-      </div>
-      <div class="product-detail-container">
-        <div id="productCarousel" class="carousel slide" data-ride="carousel">
+<!-- product section -->
+<section class="product_section layout_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div id="productCarousel" class="carousel slide" data-ride="carousel" data-interval="30000">
           <div class="carousel-inner">
             {% for image in images %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-              <img src="{% static 'images/products/' %}{{ image }}" class="d-block w-100" alt="{{ product.name }}">
+              <img src="{% static 'images/products/' %}{{ image }}" class="d-block w-100" alt="{{ product.name }}" data-toggle="modal" data-target="#imageModal">
             </div>
             {% endfor %}
           </div>
@@ -83,27 +85,132 @@
             <span class="sr-only">Next</span>
           </a>
         </div>
+      </div>
+      <div class="col-md-6">
+        <div class="product-info">
+          <div class="heading_container heading_center">
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.price }} EGP</p>
+          </div>
+          <div class="product-buttons">
+            <a href="{{ product.instagram_link }}" target="_blank" class="btn btn-primary">
+              <i class="fa fa-instagram" aria-hidden="true"></i> Instagram
+            </a>
+            <a href="#" class="btn btn-success">Buy Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <div class="product-buttons">
-          <a href="{{ product.instagram_link }}" target="_blank" class="btn btn-primary">
-            <i class="fa fa-instagram" aria-hidden="true"></i> Instagram
-          </a>
-          <a href="#" class="btn btn-success">Buy Now</a>
+<!-- Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <img src="" id="modalImage" class="img-fluid">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Image Modal -->
+<!-- end product section -->
+
+  <section>
+    <div>
+      <br>
+    </div>
+  </section>
+   <!-- info section -->
+   <section class="info_section layout_padding2">
+    <div class="container">
+      <div class="row info_form_social_row">
+        <div class="col-md-8 col-lg-9">
+          <div class="info_form">
+            <form action="{% url 'handle_email' %}" method="post">
+              {% csrf_token %}
+              <input type="email" name="email" placeholder="Enter your email">
+              <button type="submit">
+                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+              </button>
+            </form>
+          </div>
+          {% if message %}
+          <div class="alert alert-success" role="alert">
+            {{ message }}
+          </div>
+          {% endif %}
+        </div>
+        <div class="col-md-4 col-lg-3">
+
+          <div class="social_box">
+            <a href="https://www.facebook.com/people/Rubies-Jewels/61558642868319/">
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.instagram.com/rubiesjewelss/">
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row info_main_row">
+        <div class="col-md-6 col-lg-3">
+          <div class="info_links">
+            <h4>
+              Menu
+            </h4>
+            <div class="info_links_menu">
+              <a href="{% url 'index' %}">Home</a>
+              <a href="{% url 'about' %}">About</a>
+              <a href="{% url 'shop' %}">Shop</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <h4>
+            Contact Us
+          </h4>
+          <div class="info_contact">
+            <a href="">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <span>
+                Sheikh Zayed, Giza, Egypt
+              </span>
+            </a>
+            <a href="">
+              <i class="fa fa-phone" aria-hidden="true"></i>
+              <span>
+                Call +01 1010101101
+              </span>
+            </a>
+            <a href="mailto:support@rubiesjewels.com">
+              <i class="fa fa-envelope"></i>
+              <span>
+                support@rubiesjewels.com
+              </span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </section>
-  <!-- end product section -->
+
+  <!-- end info_section -->
+
 
   <!-- footer section -->
   <footer class="footer_section">
     <div class="container">
-      <p>&copy; <span id="displayYear">{{ year }}</span> All Rights Reserved By
-        <a href="{% url 'index' %}">Rubies Jewels</a>
+      <p>
+        &copy; <span id="displayYear">{{ year }}</span> All Rights Reserved By
+        <a>Rubies Jewels</a>
       </p>
     </div>
   </footer>
-  <!-- end footer section -->
+  <!-- footer section -->
+
 
   <!-- jQuery -->
   <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>

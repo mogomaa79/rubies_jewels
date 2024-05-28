@@ -82,7 +82,7 @@
       {% for product in products %}
         <div class="col-sm-6 col-md-4 col-lg-3 product-item">
           <div class="box">
-            <a href="#">
+            <a href="{% url 'product' product.id %}">
               <div class="img-box">
                 <img src="{% static 'images/products/' %}{{ product.image }}" loading="lazy" alt="">
               </div>

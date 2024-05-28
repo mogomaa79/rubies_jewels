@@ -6,7 +6,7 @@ from .models import *
 
 
 def index(request):
-    # query to get the latest 4 products
+    # query to get the latest 3 products
     products = Product.objects.all().order_by('-id')[:3]
     for p in products:
         p.image = p.image_paths()[0]

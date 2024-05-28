@@ -29,3 +29,9 @@ $(document).on("click", '[data-toggle="lightbox"]', function (event) {
     event.preventDefault();
     $(this).ekkoLightbox();
 });
+
+$(document).ready(function() {
+    $('#productCarousel').carousel({
+      interval: 2000
+    });
+  });

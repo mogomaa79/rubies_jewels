@@ -60,18 +60,18 @@
   <!-- end header section -->
 
 <!-- shop section -->
-<section class="shop_section layout_padding" style="display: flex; flex-wrap: wrap;">
+<section class="shop_section layout_padding">
   <div class="container">
     <div class="heading_container heading_center">
       <h2>THE COLLECTION</h2>
     </div>
-    <div class="product-container" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+    <div class="product-container">
       {% for product in products %}
-        <div class="col-sm-6 col-md-4 col-lg-3 product-item" style="flex: 1 1 calc(40% - 20px); margin: 10px;">
+        <div class="col-sm-6 col-md-4 col-lg-3 product-item">
           <div class="box">
             <a href="#">
               <div class="img-box">
-                <img src="{% static 'images/products/' %}{{ product }}" loading="lazy" alt="{{ product.name }}">
+                <img src="{% static 'images/products/' %}{{ product.image }}" loading="lazy" alt="{{ product.name }}">
               </div>
               <div class="detail-box">
                 <h6>{{ product.name }}</h6>

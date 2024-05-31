@@ -1040,7 +1040,7 @@ a:focus {
 }
 
 .main_image {
-  width: 80%;
+  width: 70%;
   transition: transform 0.3s ease;
 }
 
@@ -1096,4 +1096,18 @@ a:focus {
 
 .buy_now_btn:hover {
   background-color: #ebb85b;
+}
+
+.modal-dialog {
+  max-width: 35%; /* Adjust the width as needed */
+  max-height: 35%; /* Adjust the height as needed */
+}
+
+.modal-lg-custom {
+  max-width: fit-content; /* Adjust the width as needed */
+}
+
+.modal-body img {
+  max-height: fit-content; /* Adjust the height as needed */
+  object-fit: contain;
 }

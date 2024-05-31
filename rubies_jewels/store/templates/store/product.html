@@ -68,7 +68,7 @@
       <div class="row">
         <div class="col-lg-6">
           <div class="product_images">
-            <img id="mainImage" src="{% static 'images/products/' %}{{ product.images.first }}" alt="{{ product.name }}" class="img-fluid main_image" />
+            <img id="mainImage" src="{% static 'images/products/' %}{{ product.images.first }}" alt="{{ product.name }}" class="img-fluid main_image" onclick="openModal()"/>
             <div class="thumbnail_images">
               {% for image in images %}
               <img src="{% static 'images/products/' %}{{ image }}" alt="{{ product.name }}" class="img-thumbnail" onclick="changeImage(this)"/>
@@ -80,6 +80,9 @@
           <div class="product_details">
             <h2>{{ product.name }}</h2>
             <p>{{ product.description }}</p>
+            <p><strong>Material</strong>: Gold</p>
+            <p><strong>Finish</strong>: 18k Gold Plated</p>
+            <p><strong>Width</strong>: 8mm</p>
             <h4>${{ product.price }}</h4>
             <button class="btn btn-primary buy_now_btn">Buy Now</button>
           </div>
@@ -87,6 +90,33 @@
       </div>
     </div>
   </section>
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            {% for image in images %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+              <img src="{% static 'images/products/' %}{{ image }}" class="d-block w-100" alt="{{ product.name }}">
+            </div>
+            {% endfor %}
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- end product detail section -->
 
   <!-- info section -->

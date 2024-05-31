@@ -60,3 +60,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
+  function changeImage(element) {
+    document.getElementById('mainImage').src =  element.src;
+    document.getElementById('mainImage').style.transform = 'scale(1.1)';
+    setTimeout(function() {
+      document.getElementById('mainImage').style.transform = 'scale(1)';
+    }, 300);
+  }
+  

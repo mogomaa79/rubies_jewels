@@ -8,9 +8,6 @@ from .models import *
 def index(request):
     # query to get the latest 3 products
     products = Product.objects.all().order_by('-id')[:3]
-    for p in products:
-        p.image = p.image_paths()[0]
-
     return render(request, 'store/index.html', {'products': products})
 
 def about(request):
@@ -22,8 +19,6 @@ def about(request):
 
 def shop(request):
     products = Product.objects.all()
-    for p in products:
-        p.image = p.image_paths()[0]
     return render(request, 'store/shop.html', {"products": products})
 
 def handle_email(request):

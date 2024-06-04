@@ -68,7 +68,7 @@
       <div class="row">
         <div class="col-lg-6">
           <div class="product_images">
-            <img id="mainImage" src="{% static 'images/products/' %}{{ product.images.first }}" alt="{{ product.name }}" class="img-fluid main_image" onclick="openModal()"/>
+            <img id="mainImage" src="{% static 'images/products/' %}{{ product.main_image }}" alt="{{ product.name }}" class="img-fluid main_image" onclick="openModal()"/>
             <div class="thumbnail_images">
               {% for image in images %}
               <img src="{% static 'images/products/' %}{{ image }}" alt="{{ product.name }}" class="img-thumbnail" onclick="changeImage(this)"/>
@@ -83,7 +83,7 @@
             <p><strong>Material</strong>: Gold</p>
             <p><strong>Finish</strong>: 18k Gold Plated</p>
             <p><strong>Width</strong>: 8mm</p>
-            <h4>${{ product.price }}</h4>
+            <h4>{{ product.price }} EGP</h4>
             <button class="btn btn-primary buy_now_btn">Buy Now</button>
           </div>
         </div>
@@ -173,12 +173,6 @@
               <i class="fa fa-map-marker" aria-hidden="true"></i>
               <span>
                 Sheikh Zayed, Giza, Egypt
-              </span>
-            </a>
-            <a href="">
-              <i class="fa fa-phone" aria-hidden="true"></i>
-              <span>
-                Call +01 1010101101
               </span>
             </a>
             <a href="mailto:support@rubiesjewels.com">

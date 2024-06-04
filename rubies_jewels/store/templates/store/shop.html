@@ -71,7 +71,7 @@
           <div class="box">
             <a href="{% url 'product' product.id %}">
               <div class="img-box">
-                <img src="{% static 'images/products/' %}{{ product.image }}" loading="lazy" alt="{{ product.name }}">
+                <img src="{% static 'images/products/' %}{{ product.main_image }}" loading="lazy" alt="{{ product.name }}">
               </div>
               <div class="detail-box">
                 <h6>{{ product.name }}</h6>
@@ -141,12 +141,6 @@
               <i class="fa fa-map-marker" aria-hidden="true"></i>
               <span>
                 Sheikh Zayed, Giza, Egypt
-              </span>
-            </a>
-            <a href="">
-              <i class="fa fa-phone" aria-hidden="true"></i>
-              <span>
-                Call +01 1010101101
               </span>
             </a>
             <a href="mailto:support@rubiesjewels.com">

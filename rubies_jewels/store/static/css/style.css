@@ -1111,3 +1111,97 @@ a:focus {
   max-height: fit-content; /* Adjust the height as needed */
   object-fit: contain;
 }
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  .modal-dialog {
+    width: 90%; /* Adjust the width to fit mobile screens */
+    height: auto; /* Allow the height to adjust based on content */
+    margin: 10% auto; /* Center the modal horizontally and add some top margin */
+    max-width: 90%;
+    max-height: 90%;
+  }
+
+  .modal-lg-custom {
+    max-width: 100%; /* Make it fit the mobile screen */
+    width: 100%;
+  }
+
+  .modal-body {
+    overflow: hidden; /* Ensure no overflow */
+  }
+
+  .modal-body img {
+    max-height: 80vh; /* Make sure the image is not too tall */
+    width: 100%; /* Make the image take the full width */
+    height: auto; /* Adjust height based on aspect ratio */
+    object-fit: contain;
+  }
+}
+
+.shop-categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 0 -10px;
+  
+}
+
+.category {
+  flex: 1 1 calc(25% - 20px);
+  box-sizing: border-box;
+  margin: 50px;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.category:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.category a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.category-image {
+  position: relative;
+  width: 100%;
+  padding-top: 75%; /* 4:3 Aspect Ratio */
+  overflow: hidden;
+}
+
+.category-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s;
+}
+
+.category-image img.image2 {
+  opacity: 0;
+}
+
+.category-image:hover img.image1 {
+  opacity: 0;
+}
+
+.category-image:hover img.image2 {
+  opacity: 1;
+}
+
+.category h3 {
+  text-align: center;
+  padding: 10px 0;
+  background-color: #333;
+  color: #fff;
+  margin: 0;
+  font-size: 1.2em;
+}

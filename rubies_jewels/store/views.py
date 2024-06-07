@@ -3,10 +3,24 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from .models import *
+from django import forms
+from django.http import HttpResponse
+from cloudinary.forms import cl_init_js_callbacks      
+from .forms import PhotoForm
 
+def upload(request):
+  context = dict( backend_form = PhotoForm())
+
+  if request.method == 'POST':
+    form = PhotoForm(request.POST, request.FILES)
+    context['posted'] = form.instance
+    if form.is_valid():
+        form.save()
+
+  return render(request, 'store/upload.html', context)
 
 def index(request):
-    # query to get the latest 3 products
+    """Return main index with latest 3 products"""
     products = Product.objects.all().order_by('-id')[:3]
     return render(request, 'store/index.html', {'products': products})
 
@@ -18,8 +32,12 @@ def about(request):
     return render(request, 'store/about.html', {'message': message})
 
 def shop(request):
-    products = Product.objects.all()
-    return render(request, 'store/shop.html', {"products": products})
+    return render(request, 'store/shop_categories.html', {"categories": Category.objects.all()})
+
+def shop_category(request, category_id):
+    category = Category.objects.get(id=category_id)
+    products = Product.objects.filter(category=category)
+    return render(request, 'store/shop.html', {'products': products, 'category': category})
 
 def handle_email(request):
     if request.method == 'POST':
@@ -38,4 +56,4 @@ def handle_email(request):
 
 def product(request, product_id):
     product = Product.objects.get(id=product_id)
-    return render(request, 'store/product.html', {'product': product, 'images': product.image_paths()})
+    return render(request, 'store/product.html', {'product': product})

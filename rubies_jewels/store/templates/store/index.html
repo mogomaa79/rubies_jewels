@@ -84,11 +84,11 @@
           <div class="box">
             <a href="{% url 'product' product.id %}">
               <div class="img-box">
-                <img src="{% static 'images/products/' %}{{ product.main_image }}" loading="lazy" alt="">
+                <img src="{{ product.main_image.image.url }}" loading="lazy" alt="">
               </div>
               <div class="detail-box">
                 <h6>{{ product.name }}</h6>
-                <span>{{ product.price }}</span>
+                <span>{{ product.price }} EGP</span>
               </div>
               <div class="new">
                 <span>New</span>

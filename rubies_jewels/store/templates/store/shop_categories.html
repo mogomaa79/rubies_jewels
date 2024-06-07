@@ -1,0 +1,27 @@
+{% extends 'store/layout.html' %}
+{% load static %}
+{% load cloudinary %}
+
+{% block title %}
+<title>Shop</title>
+{% endblock %}
+
+{% block body %}
+<header>
+    <h1>Shop By Category</h1>
+</header>
+
+<div class="shop-categories">
+    {% for category in categories %}
+    <div class="category">
+        <a href="{% url 'shop_category' category.id %}">
+            <div class="category-image">
+                <img src="{{ category.image1.image.url }}" alt="{{ category.name }}" class="image1">
+                <img src="{{ category.image2.image.url }}" alt="{{ category.name }}" class="image2">
+            </div>
+        </a>
+        <h3>{{ category.name }}</h3>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,7 +1,4 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
-from django.contrib import messages
-from django.contrib.messages import get_messages
 from .models import * 
 from .forms import PhotoForm
 from django.core.paginator import Paginator
@@ -23,11 +20,7 @@ def index(request):
     return render(request, 'store/index.html', {'products': products})
 
 def about(request):
-    storage = get_messages(request)
-    message = list(storage)[-1] if storage else None
-    if message is None:
-        return render(request, 'store/about.html')
-    return render(request, 'store/about.html', {'message': message})
+    return render(request, 'store/about.html')
 
 def shop(request):
     return render(request, 'store/shop_categories.html', {"categories": Category.objects.all()})
@@ -54,21 +47,6 @@ def shop_category(request, category_id):
         'sort_by': sort_by,
     }
     return render(request, 'store/shop.html', context)
-
-def handle_email(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-
-        if not email:
-            messages.error(request, 'Email not provided!')
-            return HttpResponseRedirect('/about')
-        
-        Email.objects.create(email=email)
-        messages.success(request, 'Email successfully submitted!')
-        return HttpResponseRedirect('/about')
-    
-    messages.info(request, 'No POST request made.')
-    return HttpResponseRedirect('/about')
 
 def product(request, product_id):
     product = Product.objects.get(id=product_id)

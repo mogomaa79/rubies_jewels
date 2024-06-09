@@ -7,14 +7,27 @@
 {% endblock %}
 
 {% block body %}
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'shop' %}">Shop</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'shop_category' product.category.id %}">{{ product.category.name }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+      </ol>
+    </div>
+  </nav>
+
   <!-- Product Detail -->
-  <section class="product_detail_section layout_padding">
+  <section class="product-detail-section">
     <div class="container">
       <div class="row">
         <div class="col-lg-6">
-          <div class="product_images">
-            <img id="mainImage" src="{{ product.main_image.image.url }}" alt="{{ product.name }}" class="img-fluid main_image" onclick="openModal()"/>
-            <div class="thumbnail_images">
+          <div class="product-images">
+            <div class="main-image-wrapper">
+              <img id="mainImage" src="{{ product.main_image.image.url }}" alt="{{ product.name }}" class="img-fluid main-image" onclick="openModal()"/>
+            </div>
+            <div class="thumbnail-images">
               {% for img in product.images %}
                 <img src="{{ img.image.url }}" alt="{{ product.name }}" class="img-thumbnail" onclick="changeImage(this)"/>
               {% endfor %}
@@ -22,12 +35,12 @@
           </div>
         </div>
         <div class="col-lg-6">
-          <div class="product_details">
+          <div class="product-details">
             <h2>{{ product.name }}</h2>
             <p>{{ product.description }}</p>
             <p><strong>Material</strong>: {{ product.material }}</p>
             <h4>{{ product.price }} EGP</h4>
-            <button class="btn btn-primary buy_now_btn">Buy Now</button>
+            <button class="btn btn-primary buy-now-btn">Buy Now</button>
           </div>
         </div>
       </div>

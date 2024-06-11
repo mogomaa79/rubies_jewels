@@ -1,7 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from .models import * 
-from .forms import PhotoForm
+from .forms import PhotoForm, CustomUserCreationForm, EmailAuthenticationForm
 from django.core.paginator import Paginator
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, logout, authenticate
+
 
 def upload(request):
   context = dict(backend_form=PhotoForm())
@@ -28,6 +31,7 @@ def shop(request):
 def shop_category(request, category_id):
     category = get_object_or_404(Category, id=category_id)
     products = Product.objects.filter(category=category)
+    # products = Product.objects.all()
 
     # Sorting
     sort_by = request.GET.get('sort_by')
@@ -51,3 +55,43 @@ def shop_category(request, category_id):
 def product(request, product_id):
     product = Product.objects.get(id=product_id)
     return render(request, 'store/product.html', {'product': product})
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('index')
+        else:
+            errors = form.errors.as_json()
+    else:
+        form = CustomUserCreationForm()
+        errors = None
+    
+    return render(request, 'auth/signup.html', {'form': form, 'errors': errors})
+
+
+def login_view(request):
+    if request.method == 'POST':
+        form = EmailAuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=email, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('/')
+            else:
+                errors = form.errors.as_json()
+        else:
+            errors = form.errors.as_json()
+    else:
+        form = EmailAuthenticationForm()
+        errors = None
+
+    return render(request, 'auth/login.html', {'form': form, 'errors': errors})
+
+def logout_view(request):
+    logout(request)
+    return redirect('/')

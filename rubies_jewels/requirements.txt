@@ -1,3 +1,5 @@
 django
 django-future
+django-allauth
 cloudinary
+jwt

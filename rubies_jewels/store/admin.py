@@ -27,3 +27,4 @@ class ImageAdmin(admin.ModelAdmin):
     form = ImageAdminForm
 
 admin.site.register(Image, ImageAdmin)
+admin.site.register(User)

@@ -34,40 +34,40 @@
 </head>
 
 <body>
-    <!-- header section strats -->
-<header class="header_section innerpage_header">
+    <!-- header section starts -->
+<header class="header_section innerpage_header" style="position: relative; border-bottom: 2rem; bottom: 2px;">
   <div class="container-fluid">
     <nav class="navbar navbar-expand-lg custom_nav-container">
       <a class="navbar-brand" href="{% url 'index' %}">
         <span>Rubies Jewels</span>
-    </a>
+      </a>
 
-        <div class="custom_menu-btn">
-          <button onclick="openNav()">
-            <span class="s-1"> </span>
-            <span class="s-2"> </span>
-            <span class="s-3"> </span>
-          </button>
-          <div id="myNav" class="overlay">
-            <div class="overlay-content">
-              <a href="{% url 'index' %}">Home</a>
-              <a href="{% url 'about' %}">About</a>
-              <a href="{% url 'shop' %}">Shop</a>
-            </div>
+      <div class="custom_menu-btn">
+        <button onclick="openNav()">
+          <span class="s-1"> </span>
+          <span class="s-2"> </span>
+          <span class="s-3"> </span>
+        </button>
+        <div id="myNav" class="overlay">
+          <div class="overlay-content">
+            <a href="{% url 'index' %}">Home</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'shop' %}">Shop</a>
           </div>
         </div>
-
       </div>
+
     </nav>
   </div>
 </header>
 <!-- end header section -->
+
 {% block body %}
 
 {% endblock %}
   
- <!-- info section -->
-<section class="info_section layout_padding2">
+<!-- info section -->
+<section class="info_section layout_padding2" style="position: relative;">
   <div class="container">
     <div class="row info_form_social_row">
       <div class="col-md-8 col-lg-9">
@@ -123,25 +123,23 @@
 </section>
 <!-- end info_section -->
 
+<!-- footer section -->
+<footer class="footer_section">
+  <div class="container">
+    <p>
+      &copy; <span id="displayYear">{{ year }}</span> All Rights Reserved By
+      <a>Rubies Jewels</a>
+    </p>
+  </div>
+</footer>
+<!-- footer section -->
 
-  <!-- footer section -->
-  <footer class="footer_section">
-    <div class="container">
-      <p>
-        &copy; <span id="displayYear">{{ year }}</span> All Rights Reserved By
-        <a>Rubies Jewels</a>
-      </p>
-    </div>
-  </footer>
-  <!-- footer section -->
-
-
-  <!-- jQery -->
-  <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
-  <!-- bootstrap js -->
-  <script src="{% static 'js/bootstrap.js' %}"></script>
-  <!-- custom js -->
-  <script src="{% static 'js/custom.js' %}"></script>
+<!-- jQuery -->
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<!-- bootstrap js -->
+<script src="{% static 'js/bootstrap.js' %}"></script>
+<!-- custom js -->
+<script src="{% static 'js/custom.js' %}"></script>
 
 </body>
 

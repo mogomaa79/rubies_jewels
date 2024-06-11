@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Q
 from cloudinary.models import CloudinaryField
+from django.contrib.auth.models import AbstractUser
 
 
 class Email(models.Model):
@@ -65,18 +66,13 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-class User(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100, null=False, blank=False)
-    email = models.EmailField(null=False, blank=False, unique=True)
-    password = models.CharField(max_length=100, null=False, blank=False)
-    phone = models.CharField(max_length=15, null=False, blank=False)
-    address = models.TextField(max_length=500, null=False, blank=False)
-    orders = models.ManyToManyField('Order', related_name='users')
+class User(AbstractUser):
+    phone = models.CharField(max_length=15, blank=True, null=True)
+    address = models.TextField(max_length=200, blank=True, null=True)
+    email = models.EmailField(unique=True)
 
-
-    def __str__(self):
-        return self.name
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
     
 
 class Order(models.Model):

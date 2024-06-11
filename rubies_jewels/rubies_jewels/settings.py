@@ -136,3 +136,20 @@ cloudinary.config(
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+AUTH_USER_MODEL = 'store.User'
+
+# Email settings
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.freesmtpservers.com'  # SMTP server 
+# EMAIL_PORT = 25  # SMTP port (commonly 587 for TLS, 465 for SSL)
+# EMAIL_HOST_USER = 'support@rubiesjewels.com'  # SMTP server username
+# EMAIL_HOST_PASSWORD = 'password'  # SMTP server password
+# EMAIL_USE_TLS = False  # Use True for TLS, False if not needed
+# EMAIL_USE_SSL = True  # Use True for SSL, False if not needed (don't use both TLS and SSL at the same time)
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Use this for testing

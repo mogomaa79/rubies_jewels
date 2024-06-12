@@ -62,7 +62,7 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('index')
+            return redirect('shop')
         else:
             errors = form.errors.as_json()
     else:
@@ -81,7 +81,7 @@ def login_view(request):
             user = authenticate(username=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('/')
+                return redirect('shop')
             else:
                 errors = form.errors.as_json()
         else:
@@ -94,4 +94,13 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('/')
+    return redirect('shop')
+
+def wishlist(request):
+    ...
+
+def cart(request):
+    ...
+
+def checkout(request):
+    ...

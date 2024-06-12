@@ -10,7 +10,7 @@
   <!-- Mobile Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <!-- Site Metas -->
-  <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/gif" />
+  <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/gif" />
   <meta name="keywords" content="" />
   <meta name="description" content="" />
   <meta name="author" content="" />
@@ -34,112 +34,138 @@
 </head>
 
 <body>
-    <!-- header section starts -->
-<header class="header_section innerpage_header" style="position: relative; border-bottom: 2rem; bottom: 2px;">
-  <div class="container-fluid">
-    <nav class="navbar navbar-expand-lg custom_nav-container">
-      <a class="navbar-brand" href="{% url 'index' %}">
-        <span>Rubies Jewels</span>
-      </a>
+  <!-- header section starts -->
+  <header class="header_section innerpage_header" style="position: relative; border-bottom: 2rem; bottom: 2px;">
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg custom_nav-container">
+        <a class="navbar-brand" href="{% url 'index' %}">
+          <span>Rubies Jewels</span>
+        </a>
 
-      <div class="custom_menu-btn">
-        <button onclick="openNav()">
-          <span class="s-1"> </span>
-          <span class="s-2"> </span>
-          <span class="s-3"> </span>
-        </button>
-        <div id="myNav" class="overlay">
-          <div class="overlay-content">
-            <a href="{% url 'index' %}">Home</a>
-            <a href="{% url 'about' %}">About</a>
-            <a href="{% url 'shop' %}">Shop</a>
+        <div class="d-flex align-items-center ml-auto custom_nav-icons">
+          {% if user.is_authenticated %}
+            <span class="nav-icon user-greeting">Hello, {{ user.first_name }}</span>
+            <a href="{% url 'logout' %}" class="nav-icon">
+              <i class="fa fa-sign-out" aria-hidden="true"></i>
+            </a>
+          {% else %}
+            <a href="{% url 'login' %}" class="nav-icon">
+              <i class="fa fa-user" aria-hidden="true"></i>
+            </a>
+          {% endif %}
+          <a href="{% url 'wishlist' %}" class="nav-icon">
+            <i class="fa fa-heart" aria-hidden="true"></i>
+          </a>
+          <a href="{% url 'cart' %}" class="nav-icon">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            <span class="badge badge-pill badge-danger cart-count">1</span> <!-- cart count -->
+          </a>
+        </div>
+
+        <div class="custom_menu-btn">
+          <button onclick="openNav()">
+            <span class="s-1"> </span>
+            <span class="s-2"> </span>
+            <span class="s-3"> </span>
+          </button>
+          <div id="myNav" class="overlay">
+            <div class="overlay-content">
+              <a href="{% url 'index' %}">Home</a>
+              <a href="{% url 'about' %}">About</a>
+              <a href="{% url 'shop' %}">Shop</a>
+              <a href="{% url 'wishlist' %}">Wishlist</a>
+              <a href="{% url 'cart' %}">Cart</a>
+              {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout</a>
+              {% else %}
+                <a href="{% url 'login' %}">Login</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <!-- end header section -->
+
+  {% block body %}
+
+  {% endblock %}
+
+  <!-- info section -->
+  <section class="info_section layout_padding2" style="position: relative;">
+    <div class="container">
+      <div class="row info_form_social_row">
+        <div class="col-md-8 col-lg-9">
+          <!-- Empty Bar -->
+          <div class="empty_bar"></div>
+        </div>
+        <div class="col-md-4 col-lg-3">
+          <div class="social_box">
+            <a href="https://www.facebook.com/people/Rubies-Jewels/61558642868319/">
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.instagram.com/rubiesjewelss/">
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </a>
           </div>
         </div>
       </div>
-
-    </nav>
-  </div>
-</header>
-<!-- end header section -->
-
-{% block body %}
-
-{% endblock %}
-  
-<!-- info section -->
-<section class="info_section layout_padding2" style="position: relative;">
-  <div class="container">
-    <div class="row info_form_social_row">
-      <div class="col-md-8 col-lg-9">
-        <!-- Empty Bar -->
-        <div class="empty_bar"></div>
-      </div>
-      <div class="col-md-4 col-lg-3">
-        <div class="social_box">
-          <a href="https://www.facebook.com/people/Rubies-Jewels/61558642868319/">
-            <i class="fa fa-facebook" aria-hidden="true"></i>
-          </a>
-          <a href="https://www.instagram.com/rubiesjewelss/">
-            <i class="fa fa-instagram" aria-hidden="true"></i>
-          </a>
+      <div class="row info_main_row">
+        <div class="col-md-6 col-lg-3">
+          <div class="info_links">
+            <h4>
+              Menu
+            </h4>
+            <div class="info_links_menu">
+              <a href="{% url 'index' %}">Home</a>
+              <a href="{% url 'about' %}">About</a>
+              <a href="{% url 'shop' %}">Shop</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="row info_main_row">
-      <div class="col-md-6 col-lg-3">
-        <div class="info_links">
+
+        <div class="col-md-6 col-lg-3">
           <h4>
-            Menu
+            Contact Us
           </h4>
-          <div class="info_links_menu">
-            <a href="{% url 'index' %}">Home</a>
-            <a href="{% url 'about' %}">About</a>
-            <a href="{% url 'shop' %}">Shop</a>
+          <div class="info_contact">
+            <a href="">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <span>
+                Sheikh Zayed, Giza, Egypt
+              </span>
+            </a>
+            <a href="mailto:support@rubiesjewels.com">
+              <i class="fa fa-envelope"></i>
+              <span>
+                support@rubiesjewels.com
+              </span>
+            </a>
           </div>
         </div>
       </div>
-
-      <div class="col-md-6 col-lg-3">
-        <h4>
-          Contact Us
-        </h4>
-        <div class="info_contact">
-          <a href="">
-            <i class="fa fa-map-marker" aria-hidden="true"></i>
-            <span>
-              Sheikh Zayed, Giza, Egypt
-            </span>
-          </a>
-          <a href="mailto:support@rubiesjewels.com">
-            <i class="fa fa-envelope"></i>
-            <span>
-              support@rubiesjewels.com
-            </span>
-          </a>
-        </div>
-      </div>
     </div>
-  </div>
-</section>
-<!-- end info_section -->
+  </section>
+  <!-- end info_section -->
 
-<!-- footer section -->
-<footer class="footer_section">
-  <div class="container">
-    <p>
-      &copy; <span id="displayYear">{{ year }}</span> All Rights Reserved By
-      <a>Rubies Jewels</a>
-    </p>
-  </div>
-</footer>
-<!-- footer section -->
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <p>
+        &copy; <span id="displayYear">{{ year }}</span> All Rights Reserved By
+        <a>Rubies Jewels</a>
+      </p>
+    </div>
+  </footer>
+  <!-- footer section -->
 
-<!-- jQuery -->
-<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
-<!-- bootstrap js -->
-<script src="{% static 'js/bootstrap.js' %}"></script>
-<!-- custom js -->
-<script src="{% static 'js/custom.js' %}"></script>
+  <!-- jQuery -->
+  <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <!-- bootstrap js -->
+  <script src="{% static 'js/bootstrap.js' %}"></script>
+  <!-- custom js -->
+  <script src="{% static 'js/custom.js' %}"></script>
 
 </body>
 

@@ -3,3 +3,4 @@ django-future
 django-allauth
 cloudinary
 jwt
+django-cloudinary-storage

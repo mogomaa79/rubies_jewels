@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+<title>Wishlist</title>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/wishlist.css' %}">
+{% endblock %}
+
+{% block body %}
+<section class="wishlist_section">
+    <div class="container">
+        <h2 class="wishlist-title">{{ user.first_name }}'s Wishlist</h2>
+        {% for product in wishlist.items.all %}
+        <div class="product-container-wishlist">
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="{{ product.main_image.image.url }}" alt="{{ product.name }}" class="wishlist-thumbnail">
+                </div>
+                <div class="col-md-6 product-details-wishlist">
+                    <p class="product-name-wishlist">{{ product.name }}</p>
+                    <p class="product-price-wishlist">{{ product.price }} EGP</p>
+                </div>
+                <div class="col-md-3 actions-wishlist">
+                    <form action="{% url 'product_actions' product.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" name="action" value="add_to_cart" class="btn btn-add-to-cart">Add to Cart</button>
+                        <button type="submit" name="action" value="buy_now" class="btn btn-buy-now">Buy Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="empty-wishlist">Your wishlist is empty.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

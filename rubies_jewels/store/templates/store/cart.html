@@ -6,11 +6,23 @@
 <title>{{ user.first_name }}'s Cart</title>
 {% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+{% endblock %}
+
 {% block body %}
 <!-- cart section -->
 <section class="cart_section layout_padding">
     <div class="container">
         <h1 class="cart-title">{{ user.first_name }}'s Cart</h1>
+        {% if error %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ error }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endif %}
         <div class="row">
             <!-- Product Details Section -->
             <div class="col-md-8">
@@ -46,9 +58,25 @@
                 <div class="order-summary">
                     <h3>Order Summary</h3>
                     <hr>
+                    <p><strong>User Details:</strong></p>
+                    <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+                    <p>Address: {{ user.address }}</p>
+                    <p>Phone: {{ user.phone }}</p>
+                    <hr>
                     <p>Subtotal: {{ cart.total_price }} EGP</p>
                     <p class="text-muted" style="font-size: 13px;">*All Prices are inclusive of VAT</p>
-                    <form action="" method="post" class="coupon-form"> <!-- action will be updated later -->
+                    {% if cart.coupon %}
+                    <form action="{% url 'remove_coupon' %}" method="post" class="coupon-form">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <input type="text" value="{{ cart.coupon.code }}" class="form-control" style="background-color: rgb(246, 221, 168);">
+                            <div class="input-group-append">
+                                <button class="btn btn-apply" type="submit">Remove</button>
+                            </div>
+                        </div>
+                    </form>
+                    {% else %}
+                    <form action="{% url 'apply_coupon' %}" method="post" class="coupon-form">
                         {% csrf_token %}
                         <div class="input-group mb-3">
                             <input type="text" name="coupon_code" class="form-control" placeholder="Enter coupon code" required>
@@ -57,9 +85,13 @@
                             </div>
                         </div>
                     </form>
-                    <p>Coupon Discount: -0 EGP</p> <!-- Coupon Discount will be updated later -->
-                    <p>Order Total: {{ cart.total_price }} EGP</p>
-                    <a href="{% url 'checkout' %}" class="btn btn-checkout">Continue to Checkout</a>
+                    {% endif %}
+                    <p>Coupon Discount: {{ cart.coupon_discount }} EGP</p>
+                    <p>Order Total: {{ cart.total_price_after_discount }} EGP</p>
+                    <form action="{% url 'checkout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-checkout">Place Order</button>
+                    </form>
                 </div>
             </div>
         </div>

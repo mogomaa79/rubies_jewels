@@ -40,43 +40,44 @@
             <p>{{ product.description }}</p>
             <p><strong>Material</strong>: {{ product.material }}</p>
             <h4>{{ product.price }} EGP</h4>
-            <form action="{% url 'add_to_cart' product.id %}" method="POST">
+            <form action="{% url 'product_actions' product.id %}" method="POST">
               {% csrf_token %}
-              <button type="submit" class="btn btn-primary buy-now-btn">Add To Cart</button>
+              <button type="submit" name="action" value="add_to_cart" class="btn buy-now-btn">Add To Cart</button>
+              <button type="submit" name="action" value="buy_now" class="btn buy-now-btn">Buy Now</button>
+              <button type="submit" name="action" value="add_to_wishlist" class="btn buy-now-btn">Add To Wishlist</button>
             </form>
-          </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-<!-- Modal -->
-<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-            {% for img in product.images %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}">
-              <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ product.name }}">
+  <!-- Modal -->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              {% for img in product.images %}
+              <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ product.name }}">
+              </div>
+              {% endfor %}
             </div>
-            {% endfor %}
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
           </div>
-          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
         </div>
       </div>
     </div>
   </div>
-</div>
   <!-- end product detail section -->
 
 {% endblock %}

@@ -75,18 +75,24 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['username']
 
 class Cart(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='cart')
-
-    def __str__(self):
-        return f"Cart of {self.user.username}"
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    coupon = models.ForeignKey('Coupon', on_delete=models.SET_NULL, null=True, blank=True)
 
     @property
     def total_items(self):
-        return self.items.count()
+        return sum(item.quantity for item in self.items.all())
 
     @property
     def total_price(self):
         return sum(item.total_price for item in self.items.all())
+    
+    @property
+    def coupon_discount(self):
+        return self.total_price * (self.coupon.discount / 100)  if self.coupon else 0
+
+    @property
+    def total_price_after_discount(self):
+        return self.total_price - self.coupon_discount if self.coupon else self.total_price
 
 
 class CartItem(models.Model):
@@ -99,4 +105,36 @@ class CartItem(models.Model):
 
     @property
     def total_price(self):
+        return self.quantity * self.product.price
+    
+class Wishlist(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    items = models.ManyToManyField(Product)
+
+class Coupon(models.Model):
+    code = models.CharField(max_length=50, unique=True)
+    discount = models.DecimalField(max_digits=5, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.code} ({self.discount}%)"
+    
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    total_price = models.DecimalField(max_digits=5, decimal_places=2)
+    coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, null=True, blank=True)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Order by {self.user.first_name} {self.user.last_name} on {self.date}"
+    
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.quantity} of {self.product.name} in order {self.order.id}"
+
+    @property
+    def subtotal(self):
         return self.quantity * self.product.price

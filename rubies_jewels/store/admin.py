@@ -28,3 +28,14 @@ class ImageAdmin(admin.ModelAdmin):
 
 admin.site.register(Image, ImageAdmin)
 admin.site.register(User)
+admin.site.register(Coupon)
+admin.site.register(OrderItem)
+
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    extra = 1
+
+class OrderAdmin(admin.ModelAdmin):
+    inlines = [OrderItemInline]
+
+admin.site.register(Order, OrderAdmin)

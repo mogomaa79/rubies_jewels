@@ -149,3 +149,9 @@ class ProfileUpdateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control'})
+
+class CouponForm(forms.Form):
+    coupon_code = forms.CharField(max_length=50, required=True, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Enter coupon code'
+    }))

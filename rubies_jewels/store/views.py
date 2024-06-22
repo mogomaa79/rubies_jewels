@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 
 def upload(request):
@@ -31,7 +32,7 @@ def shop(request):
 
 def shop_category(request, category_id):
     category = get_object_or_404(Category, id=category_id)
-    products = Product.objects.filter(category=category)
+    products = Product.objects.filter(category=category, stock__gt=0)
     # products = Product.objects.all()
 
     # Sorting
@@ -97,48 +98,137 @@ def logout_view(request):
     logout(request)
     return redirect('shop')
 
+@login_required
 def wishlist(request):
-    ...
+    wishlist, created = Wishlist.objects.get_or_create(user=request.user)
+    return render(request, 'store/wishlist.html', {'wishlist': wishlist})
 
-
+@login_required
 def checkout(request):
-    ...
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    cart_items = CartItem.objects.filter(cart=cart)
+    
+    if request.method == 'POST':
+        # Create the order object
+        order = Order.objects.create(
+            user=request.user,
+            total_price=cart.total_price_after_discount,
+            coupon=cart.coupon
+        )
+        
+        # Add cart items to the order
+        order_items = []
+        for cart_item in cart_items:
+            product = cart_item.product
+            quantity = cart_item.quantity
+            
+            order_item = OrderItem.objects.create(
+                order=order,
+                product=product,
+                quantity=quantity
+            )
+            order_items.append(order_item)
+            
+            # Update product quantity (if needed)
+            product.stock -= quantity
+            product.save()
+        
+        # Clear the cart items after creating the order
+        cart.items.all().delete()
+        
+        return redirect('shop')
+    
+    return render(request, 'store/cart.html', {'cart': cart, 'cart_items': cart_items, 'checkout': True})
+
+@login_required
+def product_actions(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    action = request.POST.get('action')
+    
+    if action == 'add_to_cart':
+        # Add product to cart logic
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+        if not created:
+            cart_item.quantity += 1
+        cart_item.save()
+        return redirect('shop')  # Redirect to cart page
+
+    elif action == 'buy_now':
+        # Buy now logic
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+        if not created:
+            cart_item.quantity += 1
+        cart_item.save()
+        return redirect('checkout')  # Redirect to checkout page
+
+    elif action == 'add_to_wishlist':
+        # Add product to wishlist logic
+        wishlist, created = Wishlist.objects.get_or_create(user=request.user)
+        wishlist.items.add(product)
+        return redirect('wishlist')  # Redirect to wishlist page
+
+    return redirect('product', product_id=product_id)
 
 @login_required
 def cart(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
-    return render(request, 'store/cart.html', {'cart': cart})
-
-@login_required
-def add_to_cart(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    cart, created = Cart.objects.get_or_create(user=request.user)
-    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
-    if not created:
-        cart_item.quantity += 1
-        cart_item.save()
-    return redirect('shop')
-
-@login_required
-def remove_from_cart(request, product_id):
-    cart = get_object_or_404(Cart, user=request.user)
-    product = get_object_or_404(Product, id=product_id)
-    cart_item = get_object_or_404(CartItem, cart=cart, product=product)
-    cart_item.delete()
-    return redirect('cart')
+    context = {
+        'cart': cart,
+        'user': request.user,
+    }
+    return render(request, 'store/cart.html', context)
 
 @login_required
 def update_cart_item(request, product_id):
-    cart = get_object_or_404(Cart, user=request.user)
-    product = get_object_or_404(Product, id=product_id)
-    cart_item = get_object_or_404(CartItem, cart=cart, product=product)
-    if request.method == 'POST':
-        quantity = int(request.POST.get('quantity'))
-        if quantity > 0:
+    product = Product.objects.get(id=product_id)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    quantity = int(request.POST.get('quantity', 1))
+
+    if quantity > 0:
+        if quantity <= product.stock:
+            cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
             cart_item.quantity = quantity
             cart_item.save()
         else:
-            cart_item.delete()
+            return render(request, 'store/cart.html', {
+                'cart': cart,
+                'user': request.user,
+                'error': f"Only {product.stock} {product.name} left in stock"
+            })
+    else:
+        CartItem.objects.filter(cart=cart, product=product).delete()
+
+    return redirect('cart')
+
+@login_required
+def remove_from_cart(request, product_id):
+    product = Product.objects.get(id=product_id)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    CartItem.objects.filter(cart=cart, product=product).delete()
+    return redirect('cart')
+
+@login_required
+@csrf_exempt
+def apply_coupon(request):
+    if request.method == 'POST':
+        coupon_code = request.POST.get('coupon_code')
+        cart, created = Cart.objects.get_or_create(user=request.user)
+
+        # Example coupon logic
+        if coupon_code in Coupon.objects.values_list('code', flat=True):
+            cart.coupon = Coupon.objects.get(code=coupon_code)
+            cart.save()
+
+    return redirect('cart')
+
+@login_required
+@csrf_exempt
+def remove_coupon(request):
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    cart.coupon = None
+    cart.save()
     return redirect('cart')
 
 @login_required

@@ -101,6 +101,11 @@ body {
     flex: 1 1 calc(50% - 2rem); /* Fit 2 per row on medium screens */
   }
 
+  .category-image {
+    max-height: 250px; /* Adjusted height for medium screens */
+    object-fit: fill;
+  }
+
   .shop-header h1 {
     font-size: 1.5rem;
   }
@@ -110,9 +115,9 @@ body {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .category {
-    flex: 1 1 calc(100% - 2rem); /* Fit 1 per row on small screens */
+    flex: 1 1 calc(50% - 2rem); /* Fit 1 per row on small screens */
   }
 
   .shop-header h1 {
@@ -122,4 +127,9 @@ body {
   .shop-header {
     padding: 1rem 0.5rem; /* Adjusted padding for small screens */
   }
+
+  .category-image {
+    max-height: 160px; /* Adjusted height for medium screens */
+    }
 }
+

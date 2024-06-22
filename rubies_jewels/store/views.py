@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from .models import * 
-from .forms import PhotoForm, CustomUserCreationForm, EmailAuthenticationForm
+from .forms import *
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 
 
 def upload(request):
@@ -99,8 +100,55 @@ def logout_view(request):
 def wishlist(request):
     ...
 
-def cart(request):
-    ...
 
 def checkout(request):
     ...
+
+@login_required
+def cart(request):
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    return render(request, 'store/cart.html', {'cart': cart})
+
+@login_required
+def add_to_cart(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+    if not created:
+        cart_item.quantity += 1
+        cart_item.save()
+    return redirect('shop')
+
+@login_required
+def remove_from_cart(request, product_id):
+    cart = get_object_or_404(Cart, user=request.user)
+    product = get_object_or_404(Product, id=product_id)
+    cart_item = get_object_or_404(CartItem, cart=cart, product=product)
+    cart_item.delete()
+    return redirect('cart')
+
+@login_required
+def update_cart_item(request, product_id):
+    cart = get_object_or_404(Cart, user=request.user)
+    product = get_object_or_404(Product, id=product_id)
+    cart_item = get_object_or_404(CartItem, cart=cart, product=product)
+    if request.method == 'POST':
+        quantity = int(request.POST.get('quantity'))
+        if quantity > 0:
+            cart_item.quantity = quantity
+            cart_item.save()
+        else:
+            cart_item.delete()
+    return redirect('cart')
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('shop')
+    else:
+        form = ProfileUpdateForm(instance=request.user)
+
+    return render(request, 'auth/profile.html', {'form': form})

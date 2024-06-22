@@ -1,0 +1,80 @@
+/* Ensure the height of the container adapts to the viewport height */
+.profile-container {
+    margin-top: 500px; /* Center the container with top and bottom margin */
+    margin-bottom: 500px;
+    position: relative;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.vh-100 {
+    margin-top: 70px;
+    margin-bottom: 150px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.card {
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+h3 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+p {
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    text-align: left;
+}
+
+.btn-primary {
+    background-color: #ebb85b;
+    border-color: #dba33b;
+    font-size: 1.2rem;
+}
+
+.btn-primary:hover {
+    background-color: #ce9b3c;
+    border-color: #ebb85b;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .vh-100 {
+      padding: 2rem 0;
+      margin-top: 180px;
+      margin-bottom: 180px;
+    }
+  
+    .card-body {
+      padding: 1.5rem;
+    }
+  
+    .btn-primary {
+      font-size: 1rem;
+    }
+}

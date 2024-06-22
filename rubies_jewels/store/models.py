@@ -13,7 +13,7 @@ class Email(models.Model):
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, null=False, blank=False)
-    price = models.IntegerField(null=False, blank=False)
+    price = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     description = models.TextField(max_length=500, null=False, blank=False)
     material = models.CharField(max_length=100, null=False, blank=False)
@@ -73,14 +73,30 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
-    
 
-class Order(models.Model):
-    id = models.AutoField(primary_key=True)
-    products = models.ManyToManyField('Product', related_name='orders')
-    quantity = models.IntegerField(null=False, blank=False)
-    total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False)
-    date = models.DateTimeField(auto_now_add=True, null=False, blank=False)
+class Cart(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='cart')
 
     def __str__(self):
-        return self.product.name
+        return f"Cart of {self.user.username}"
+
+    @property
+    def total_items(self):
+        return self.items.count()
+
+    @property
+    def total_price(self):
+        return sum(item.total_price for item in self.items.all())
+
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.quantity} of {self.product.name}"
+
+    @property
+    def total_price(self):
+        return self.quantity * self.product.price

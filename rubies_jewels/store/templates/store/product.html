@@ -40,7 +40,11 @@
             <p>{{ product.description }}</p>
             <p><strong>Material</strong>: {{ product.material }}</p>
             <h4>{{ product.price }} EGP</h4>
-            <button class="btn btn-primary buy-now-btn">Buy Now</button>
+            <form action="{% url 'add_to_cart' product.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary buy-now-btn">Add To Cart</button>
+            </form>
+          </div>
           </div>
         </div>
       </div>

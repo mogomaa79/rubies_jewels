@@ -19,7 +19,6 @@ class Product(models.Model):
     description = models.TextField(max_length=500, null=False, blank=False)
     material = models.CharField(max_length=100, null=False, blank=False)
     stock = models.IntegerField(null=False, blank=False)
-    insta_link = models.URLField(null=False, blank=False)
     images = models.ManyToManyField('Image', through='ProductImageRelation')
 
     def main_image(self):
@@ -80,6 +79,20 @@ class User(AbstractUser):
             self.username = str(uuid.uuid4())
         super(User, self).save(*args, **kwargs)
 
+class Offer(models.Model):
+    id = models.AutoField(primary_key=True)
+    product1 = models.ForeignKey('Product', related_name='bundle_offer1', on_delete=models.CASCADE)
+    product2 = models.ForeignKey('Product', related_name='bundle_offer2', on_delete=models.CASCADE)
+    bundle_price = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False)
+    
+    @property
+    def old_price(self):
+        return self.product1.price + self.product2.price
+
+    def __str__(self):
+        return f"Bundle Offer: {self.product1.name} + {self.product2.name}"
+
+
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     coupon = models.ForeignKey('Coupon', on_delete=models.SET_NULL, null=True, blank=True)
@@ -103,19 +116,28 @@ class Cart(models.Model):
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True)
+    offer = models.ForeignKey(Offer, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return f"{self.quantity} of {self.product.name}"
+        if self.product:
+            return f"{self.quantity} of {self.product.name}"
+        else:
+            return f"{self.quantity} of {self.offer.product1.name} and {self.offer.product2.name} offer"
 
     @property
     def total_price(self):
-        return self.quantity * self.product.price
-    
+        if self.product:
+            return self.quantity * self.product.price
+        elif self.offer:
+            return self.quantity * self.offer.bundle_price
+
+
 class Wishlist(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     items = models.ManyToManyField(Product)
+
 
 class Coupon(models.Model):
     code = models.CharField(max_length=50, unique=True)
@@ -124,24 +146,34 @@ class Coupon(models.Model):
     def __str__(self):
         return f"{self.code} ({self.discount}%)"
     
+
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     total_price = models.DecimalField(max_digits=5, decimal_places=2)
     coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
-    delivered = models.BooleanField(default=False)
+    deliver = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Order by {self.user.first_name} {self.user.last_name} on {self.date.date()}, {self.date.hour}:{self.date.minute} {'(DELIVERED)' if self.delivered else ''}"
     
+
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True)
+    offer = models.ForeignKey(Offer, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return f"{self.quantity} of {self.product.name} in order {self.order.id}"
+        if self.product:
+            return f"{self.quantity} of {self.product.name} in order {self.order.id}"
+        else:
+            return f"{self.quantity} of {self.offer.product1.name} and {self.offer.product2.name} offer in order {self.order.id}"
 
     @property
     def subtotal(self):
-        return self.quantity * self.product.price
+        if self.product:
+            return self.quantity * self.product.price
+        else:
+            return self.quantity * self.offer.bundle_price
+

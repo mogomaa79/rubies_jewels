@@ -7,7 +7,6 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
-
 def upload(request):
   context = dict(backend_form=PhotoForm())
 
@@ -120,18 +119,48 @@ def checkout(request):
         order_items = []
         for cart_item in cart_items:
             product = cart_item.product
+            offer = cart_item.offer
             quantity = cart_item.quantity
+
+            if product and quantity > product.stock:
+                return render(request, 'store/cart.html', {
+                    'cart': cart,
+                    'cart_items': cart_items,
+                    'error': f"Not enough left in stock for {product.name}"
+                })
+            elif offer and (quantity > offer.product1.stock or quantity > offer.product2.stock):
+                return render(request, 'store/cart.html', {
+                    'cart': cart,
+                    'cart_items': cart_items,
+                    'error': f"Not enough left in stock for {offer.product1.name} and {offer.product2.name}"
+                })
             
-            order_item = OrderItem.objects.create(
-                order=order,
-                product=product,
-                quantity=quantity
-            )
-            order_items.append(order_item)
-            
-            # Update product quantity (if needed)
-            product.stock -= quantity
-            product.save()
+            if product:
+                order_item = OrderItem.objects.create(
+                    order=order,
+                    product=product,
+                    quantity=quantity
+                )
+                order_items.append(order_item)
+                
+                # Update product quantity (if needed)
+                product.stock -= quantity
+                product.save()
+
+            elif offer:
+                order_item = OrderItem.objects.create(
+                    order=order,
+                    offer=offer,
+                    quantity=quantity
+                )
+                order_items.append(order_item)
+                
+                # Update product quantity (if needed)
+                offer.product1.stock -= quantity
+                offer.product2.stock -= quantity
+                offer.product1.save()
+                offer.product2.save()
+                offer.save()
         
         # Clear the cart items after creating the order
         cart.items.all().delete()
@@ -151,7 +180,7 @@ def product_actions(request, product_id):
         # Add product to cart logic
         cart, created = Cart.objects.get_or_create(user=request.user)
         cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
-        if not created:
+        if not created and product.stock > cart_item.quantity:
             cart_item.quantity += 1
         cart_item.save()
         return redirect('shop')  # Redirect to cart page
@@ -160,7 +189,7 @@ def product_actions(request, product_id):
         # Buy now logic
         cart, created = Cart.objects.get_or_create(user=request.user)
         cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
-        if not created:
+        if not created and product.stock > cart_item.quantity:
             cart_item.quantity += 1
         cart_item.save()
         return redirect('checkout')  # Redirect to checkout page
@@ -174,7 +203,7 @@ def product_actions(request, product_id):
         # Remove product from wishlist logic
         wishlist, created = Wishlist.objects.get_or_create(user=request.user)
         wishlist.items.remove(product)
-
+    
     return redirect('product', product_id=product_id)
 
 @login_required
@@ -206,6 +235,28 @@ def update_cart_item(request, product_id):
         
     elif action == 'decrease':
         cart_item = get_object_or_404(CartItem, cart=cart, product=product)
+        cart_item.quantity -= 1
+        if cart_item.quantity == 0:
+            cart_item.delete()
+        else:
+            cart_item.save()
+
+    return redirect('cart')
+
+@login_required
+def update_cart_offer(request, offer_id):
+    offer = get_object_or_404(Offer, id=offer_id)
+    cart = get_object_or_404(Cart, user=request.user)
+    cart_item = get_object_or_404(CartItem, cart=cart, offer=offer)
+    
+    action = request.POST.get('action')
+    if action == 'increase':
+            return render(request, 'store/cart.html', {
+                'cart': cart,
+                'user': request.user,
+                'error': "Bundle offer can only be redeemed once."
+            })
+    elif action == 'decrease':
         cart_item.quantity -= 1
         if cart_item.quantity == 0:
             cart_item.delete()
@@ -261,3 +312,14 @@ def profile(request):
         form = ProfileUpdateForm(instance=request.user)
 
     return render(request, 'auth/profile.html', {'form': form})
+
+@login_required
+def buy_offer(request, offer_id):
+    offer = get_object_or_404(Offer, id=offer_id)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    # Ensure cart item creation handles offers
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, offer=offer, defaults={'quantity': 1})
+    if not created and cart_item.quantity < 1:
+        cart_item.quantity += 1
+    cart_item.save()
+    return redirect('checkout')

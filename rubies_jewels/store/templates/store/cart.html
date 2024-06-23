@@ -29,15 +29,27 @@
                 {% for item in cart.items.all %}
                 <div class="product-container-cart row">
                     <div class="col-3">
+                        {% if item.product %}
                         <img src="{{ item.product.main_image.image.url }}" alt="{{ item.product.name }}" class="cart-thumbnail">
+                        {% else %}
+                        <div class="offer-thumbnails">
+                            <img src="{{ item.offer.product1.main_image.image.url }}" alt="{{ item.offer.product1.name }}" class="cart-thumbnail" style="width: 50%;">
+                            <img src="{{ item.offer.product2.main_image.image.url }}" alt="{{ item.offer.product2.name }}" class="cart-thumbnail" style="width: 50%;">
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="col-6 product-details-cart">
+                        {% if item.product %}
                         <h5 class="product-name-cart">{{ item.product.name }}</h5>
                         <p class="product-price">Price: {{ item.product.price }} EGP</p>
+                        {% else %}
+                        <h5 class="product-name-cart">Bundle ({{ item.offer.product1.name }} + {{ item.offer.product2.name }})</h5>
+                        <p class="product-price">Bundle Price: {{ item.offer.bundle_price }} EGP</p>
+                        {% endif %}
                         <p class="product-total">Total: {{ item.total_price }} EGP</p>
                     </div>
                     <div class="col-3">
-                        <form action="{% url 'update_cart_item' item.product.id %}" method="post" class="quantity-form">
+                        <form action="{% if item.product %}{% url 'update_cart_item' item.product.id %}{% else %}{% url 'update_cart_offer' item.offer.id %}{% endif %}" method="post" class="quantity-form">
                             {% csrf_token %}
                             <div class="input-group">
                                 <button type="button" class="btn btn-quantity decrease" data-toggle="tooltip" title="Decrease Quantity" data-action="decrease">

@@ -40,7 +40,9 @@
             <p>{{ product.description }}</p>
             <p><strong>Material</strong>: {{ product.material }}</p>
             <h4>{{ product.price }} EGP</h4>
-            <form action="{% url 'product_actions' product.id %}" method="POST" id="productForm" class="d-flex align-items-center justify-content-between">
+            
+            <!-- Add to Cart and Wishlist Buttons -->
+            <form action="{% url 'product_actions' product.id %}" method="POST" id="productForm" class="d-flex align-items-center justify-content-between mb-3">
               {% csrf_token %}
               <div>
                 <button type="submit" name="action" value="add_to_cart" class="btn buy-now-btn">Add To Cart</button>
@@ -49,10 +51,89 @@
               <div class="wishlist-icon" onclick="toggleWishlist(this)">
                 <i class="fa {% if product in user.wishlist.items.all %}fa-heart{% else %}fa-heart-o{% endif %}"></i>
               </div>
-            </form>            
+            </form>
           </div>
         </div>
       </div>
+
+      <!-- Bundle Offer Section -->
+      {% if product.bundle_offer1.all or product.bundle_offer2.all %}
+      <div class="bundle-offer-section">
+        <h3>Bundle Offers</h3>
+        <div class="row">
+          {% for offer in product.bundle_offer1.all %}
+            <div class="col-lg-6 mb-4">
+              <div class="offer-item">
+                <div class="bundle-info">
+                  <div class="product-thumbnail">
+                    <img src="{{ offer.product1.main_image.image.url }}" alt="{{ offer.product1.name }}" class="img-fluid">
+                  </div>
+                  <div class="product-details">
+                    <p class="product-name">{{ offer.product1.name }}</p>
+                    <p class="product-price">Price: {{ offer.product1.price }} EGP</p>
+                  </div>
+                </div>
+                <div class="bundle-info">
+                  <div class="product-thumbnail">
+                    <img src="{{ offer.product2.main_image.image.url }}" alt="{{ offer.product2.name }}" class="img-fluid">
+                  </div>
+                  <div class="product-details">
+                    <p class="product-name">{{ offer.product2.name }}</p>
+                    <p class="product-price">Price: {{ offer.product2.price }} EGP</p>
+                  </div>
+                </div>
+                <div class="bundle-price">
+                  <p>New Price: {{ offer.bundle_price }} EGP</p>
+                  <p class="old-price">Old Price: {{ offer.old_price }} EGP</p>
+                </div>
+                <form action="{% url 'buy_offer' offer.id %}" method="POST">
+                  {% csrf_token %}
+                  <div class="text-center mt-3">
+                  <button type="submit" name="action" value="add_bundle_to_cart" class="btn buy-now-btn ml-6">Buy Bundle</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+          {% for offer in product.bundle_offer2.all %}
+            <div class="col-lg-6 mb-4">
+              <div class="offer-item">
+                <div class="bundle-info">
+                  <div class="product-thumbnail">
+                    <img src="{{ offer.product1.main_image.image.url }}" alt="{{ offer.product1.name }}" class="img-fluid">
+                  </div>
+                  <div class="product-details">
+                    <p class="product-name">{{ offer.product1.name }}</p>
+                    <p class="product-price">Price: {{ offer.product1.price }} EGP</p>
+                  </div>
+                </div>
+                <div class="bundle-info">
+                  <div class="product-thumbnail">
+                    <img src="{{ offer.product2.main_image.image.url }}" alt="{{ offer.product2.name }}" class="img-fluid">
+                  </div>
+                  <div class="product-details">
+                    <p class="product-name">{{ offer.product2.name }}</p>
+                    <p class="product-price">Price: {{ offer.product2.price }} EGP</p>
+                  </div>
+                </div>
+                <div class="bundle-price">
+                  <p>New Price: {{ offer.bundle_price }} EGP</p>
+                  <p class="old-price">Old Price: {{ offer.old_price }} EGP</p>
+                </div>
+                <form action="{% url 'buy_offer' offer.id %}" method="POST">
+                  {% csrf_token %}
+                  <div class="text-center mt-3">
+                  <button type="submit" name="action" value="add_bundle_to_cart" class="btn buy-now-btn ml-6">Buy Bundle</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      <!-- End Bundle Offer Section -->
+
     </div>
   </section>
 
@@ -64,9 +145,9 @@
           <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
               {% for img in product.images %}
-              <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ product.name }}">
-              </div>
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                  <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ product.name }}">
+                </div>
               {% endfor %}
             </div>
             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -82,61 +163,113 @@
       </div>
     </div>
   </div>
-  <!-- end product detail section -->
 
-  <script>
-function toggleWishlist(element) {
-    var form = document.getElementById('productForm');
-    var wishlistAction = document.createElement('input');
-    wishlistAction.setAttribute('type', 'hidden');
-    wishlistAction.setAttribute('name', 'action');
-    if (element.querySelector('i').classList.contains('fa-heart-o')) {
-        wishlistAction.setAttribute('value', 'add_to_wishlist');
-    } else {
-        wishlistAction.setAttribute('value', 'remove_from_wishlist');
-    }
-    form.appendChild(wishlistAction);
-    form.submit();
-}
-  </script>
-
+  <!-- Additional CSS -->
   <style>
-    .wishlist-icon {
-      cursor: pointer;
+    .bundle-offer-section {
+      padding: 30px 0;
+      margin-top: 30px;
+      border-top: 1px solid #ddd;
+
     }
 
-    .wishlist-icon i {
+    .bundle-offer-section h3 {
+      text-align: center;
+      margin-bottom: 20px;
       font-size: 24px;
-      color: #ccc;
-      transition: color 0.3s;
+      color: #333;
     }
 
-    .wishlist-icon i.fa-heart {
-      color: gold;
+    .offer-item {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease;
+      height: 100%;
     }
 
-    .wishlist-icon:hover i {
-      color: gold;
+    .offer-item:hover {
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     }
 
-    .d-flex {
+    .bundle-info {
       display: flex;
-    }
-
-    .align-items-center {
       align-items: center;
-    }
-
-    .justify-content-between {
       justify-content: space-between;
+      margin-bottom: 15px;
     }
 
-    .ml-2 {
-      margin-left: 0.5rem;
+    .product-thumbnail {
+      width: 80px;
+      height: 80px;
+      overflow: hidden;
+      border-radius: 5px;
+      margin-right: 20px;
     }
 
-    .ml-3 {
-      margin-left: 1rem;
+    .product-thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-details {
+      flex: 1;
+    }
+
+    .product-name {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .product-price {
+      font-size: 16px;
+      color: #777;
+    }
+
+    .bundle-price {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .bundle-price p {
+      margin-bottom: 5px;
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 14px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .col-lg-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+      }
     }
   </style>
+
+  <!-- JavaScript and Script for Wishlist Toggle -->
+  <script>
+    function toggleWishlist(element) {
+      var form = document.getElementById('productForm');
+      var wishlistAction = document.createElement('input');
+      wishlistAction.setAttribute('type', 'hidden');
+      wishlistAction.setAttribute('name', 'action');
+      if (element.querySelector('i').classList.contains('fa-heart-o')) {
+        wishlistAction.setAttribute('value', 'add_to_wishlist');
+      } else {
+        wishlistAction.setAttribute('value', 'remove_from_wishlist');
+      }
+      form.appendChild(wishlistAction);
+      form.submit();
+    }
+  </script>
+
 {% endblock %}

@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Q
 from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import AbstractUser
+import uuid
 
 
 class Email(models.Model):
@@ -74,6 +75,11 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
+    def save(self, *args, **kwargs):
+        if not self.username:
+            self.username = str(uuid.uuid4())
+        super(User, self).save(*args, **kwargs)
+
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     coupon = models.ForeignKey('Coupon', on_delete=models.SET_NULL, null=True, blank=True)
@@ -123,9 +129,10 @@ class Order(models.Model):
     total_price = models.DecimalField(max_digits=5, decimal_places=2)
     coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
+    delivered = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Order by {self.user.first_name} {self.user.last_name} on {self.date}"
+        return f"Order by {self.user.first_name} {self.user.last_name} on {self.date.date()}, {self.date.hour}:{self.date.minute} {'(DELIVERED)' if self.delivered else ''}"
     
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')

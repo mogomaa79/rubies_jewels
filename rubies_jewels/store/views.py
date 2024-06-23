@@ -22,7 +22,7 @@ def upload(request):
 def index(request):
     """Return main index with latest 3 products"""
     products = Product.objects.all().order_by('-id')[:4]
-    return render(request, 'store/index.html', {'products': products})
+    return render(request, 'store/index.html', {'products': products, "categories": Category.objects.all()})
 
 def about(request):
     return render(request, 'store/about.html')
@@ -43,7 +43,7 @@ def shop_category(request, category_id):
         products = products.order_by('-price')
 
     # Pagination
-    paginator = Paginator(products, 8)  # Show 8 products per page
+    paginator = Paginator(products, 4)  # Show 4 products per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -107,8 +107,8 @@ def wishlist(request):
 def checkout(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
     cart_items = CartItem.objects.filter(cart=cart)
-    
-    if request.method == 'POST':
+
+    if request.method == 'POST' and len(cart_items) > 0:
         # Create the order object
         order = Order.objects.create(
             user=request.user,
@@ -135,16 +135,18 @@ def checkout(request):
         
         # Clear the cart items after creating the order
         cart.items.all().delete()
-        
+        cart.coupon = None
+        cart.save()
+
         return redirect('shop')
     
-    return render(request, 'store/cart.html', {'cart': cart, 'cart_items': cart_items, 'checkout': True})
+    return render(request, 'store/cart.html', {'cart': cart, 'cart_items': cart_items})
 
 @login_required
 def product_actions(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     action = request.POST.get('action')
-    
+
     if action == 'add_to_cart':
         # Add product to cart logic
         cart, created = Cart.objects.get_or_create(user=request.user)
@@ -167,7 +169,11 @@ def product_actions(request, product_id):
         # Add product to wishlist logic
         wishlist, created = Wishlist.objects.get_or_create(user=request.user)
         wishlist.items.add(product)
-        return redirect('wishlist')  # Redirect to wishlist page
+    
+    elif action == 'remove_from_wishlist':
+        # Remove product from wishlist logic
+        wishlist, created = Wishlist.objects.get_or_create(user=request.user)
+        wishlist.items.remove(product)
 
     return redirect('product', product_id=product_id)
 
@@ -182,31 +188,30 @@ def cart(request):
 
 @login_required
 def update_cart_item(request, product_id):
-    product = Product.objects.get(id=product_id)
+    product = get_object_or_404(Product, id=product_id)
     cart, created = Cart.objects.get_or_create(user=request.user)
-    quantity = int(request.POST.get('quantity', 1))
+    action = request.POST.get('action')
 
-    if quantity > 0:
-        if quantity <= product.stock:
-            cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
-            cart_item.quantity = quantity
+    if action == 'increase':
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+        if product.stock > cart_item.quantity:
+            cart_item.quantity += 1
             cart_item.save()
         else:
             return render(request, 'store/cart.html', {
                 'cart': cart,
                 'user': request.user,
-                'error': f"Only {product.stock} {product.name} left in stock"
+                'error': "Not enough left in stock"
             })
-    else:
-        CartItem.objects.filter(cart=cart, product=product).delete()
+        
+    elif action == 'decrease':
+        cart_item = get_object_or_404(CartItem, cart=cart, product=product)
+        cart_item.quantity -= 1
+        if cart_item.quantity == 0:
+            cart_item.delete()
+        else:
+            cart_item.save()
 
-    return redirect('cart')
-
-@login_required
-def remove_from_cart(request, product_id):
-    product = Product.objects.get(id=product_id)
-    cart, created = Cart.objects.get_or_create(user=request.user)
-    CartItem.objects.filter(cart=cart, product=product).delete()
     return redirect('cart')
 
 @login_required
@@ -215,11 +220,25 @@ def apply_coupon(request):
     if request.method == 'POST':
         coupon_code = request.POST.get('coupon_code')
         cart, created = Cart.objects.get_or_create(user=request.user)
+        
+        try:
+            coupon = Coupon.objects.get(code=coupon_code)
+            if Order.objects.filter(user=request.user, coupon=coupon).exists(): # check if there is an order which has this user and the coupon
+                return render(request, 'store/cart.html', context={
+                "user": request.user,
+                "cart": cart,
+                "error": "You already used this Coupon!"
+            })
+            else:
+                cart.coupon = coupon
+                cart.save()
 
-        # Example coupon logic
-        if coupon_code in Coupon.objects.values_list('code', flat=True):
-            cart.coupon = Coupon.objects.get(code=coupon_code)
-            cart.save()
+        except Coupon.DoesNotExist:
+            return render(request, 'store/cart.html', context={
+                "user": request.user,
+                "cart": cart,
+                "error": "Invalid Coupon Code"
+            })
 
     return redirect('cart')
 

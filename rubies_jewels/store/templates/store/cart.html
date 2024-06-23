@@ -40,13 +40,14 @@
                         <form action="{% url 'update_cart_item' item.product.id %}" method="post" class="quantity-form">
                             {% csrf_token %}
                             <div class="input-group">
-                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control">
-                                <button type="submit" class="btn btn-update" data-toggle="tooltip" title="Update Quantity">
-                                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                                <button type="button" class="btn btn-quantity decrease" data-toggle="tooltip" title="Decrease Quantity" data-action="decrease">
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
                                 </button>
-                                <a href="{% url 'remove_from_cart' item.product.id %}" class="btn btn-remove" data-toggle="tooltip" title="Remove Item">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
+                                <span class="quantity-display">x{{ item.quantity }}</span>
+                                <button type="button" class="btn btn-quantity increase" data-toggle="tooltip" title="Increase Quantity" data-action="increase">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                                <input type="hidden" name="action" class="action-input">
                             </div>
                         </form>
                     </div>
@@ -98,4 +99,19 @@
     </div>
 </section>
 <!-- end cart section -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const forms = document.querySelectorAll('.quantity-form');
+        forms.forEach(form => {
+            form.addEventListener('click', function(event) {
+                if (event.target.closest('.btn-quantity')) {
+                    const action = event.target.closest('.btn-quantity').getAttribute('data-action');
+                    form.querySelector('.action-input').value = action;
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}

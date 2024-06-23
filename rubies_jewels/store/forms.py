@@ -101,7 +101,8 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'phone', 'address', 'password1', 'password2')
-    
+        exclude = ('username',)
+
 class ProfileUpdateForm(forms.ModelForm):
     email = forms.EmailField(
         required=True,

@@ -40,12 +40,16 @@
             <p>{{ product.description }}</p>
             <p><strong>Material</strong>: {{ product.material }}</p>
             <h4>{{ product.price }} EGP</h4>
-            <form action="{% url 'product_actions' product.id %}" method="POST">
+            <form action="{% url 'product_actions' product.id %}" method="POST" id="productForm" class="d-flex align-items-center justify-content-between">
               {% csrf_token %}
-              <button type="submit" name="action" value="add_to_cart" class="btn buy-now-btn">Add To Cart</button>
-              <button type="submit" name="action" value="buy_now" class="btn buy-now-btn">Buy Now</button>
-              <button type="submit" name="action" value="add_to_wishlist" class="btn buy-now-btn">Add To Wishlist</button>
-            </form>
+              <div>
+                <button type="submit" name="action" value="add_to_cart" class="btn buy-now-btn">Add To Cart</button>
+                <button type="submit" name="action" value="buy_now" class="btn buy-now-btn ml-2">Buy Now</button>
+              </div>
+              <div class="wishlist-icon" onclick="toggleWishlist(this)">
+                <i class="fa {% if product in user.wishlist.items.all %}fa-heart{% else %}fa-heart-o{% endif %}"></i>
+              </div>
+            </form>            
           </div>
         </div>
       </div>
@@ -80,4 +84,59 @@
   </div>
   <!-- end product detail section -->
 
+  <script>
+function toggleWishlist(element) {
+    var form = document.getElementById('productForm');
+    var wishlistAction = document.createElement('input');
+    wishlistAction.setAttribute('type', 'hidden');
+    wishlistAction.setAttribute('name', 'action');
+    if (element.querySelector('i').classList.contains('fa-heart-o')) {
+        wishlistAction.setAttribute('value', 'add_to_wishlist');
+    } else {
+        wishlistAction.setAttribute('value', 'remove_from_wishlist');
+    }
+    form.appendChild(wishlistAction);
+    form.submit();
+}
+  </script>
+
+  <style>
+    .wishlist-icon {
+      cursor: pointer;
+    }
+
+    .wishlist-icon i {
+      font-size: 24px;
+      color: #ccc;
+      transition: color 0.3s;
+    }
+
+    .wishlist-icon i.fa-heart {
+      color: gold;
+    }
+
+    .wishlist-icon:hover i {
+      color: gold;
+    }
+
+    .d-flex {
+      display: flex;
+    }
+
+    .align-items-center {
+      align-items: center;
+    }
+
+    .justify-content-between {
+      justify-content: space-between;
+    }
+
+    .ml-2 {
+      margin-left: 0.5rem;
+    }
+
+    .ml-3 {
+      margin-left: 1rem;
+    }
+  </style>
 {% endblock %}

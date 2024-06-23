@@ -31,7 +31,7 @@ CLOUDINARY_API_KEY = os.environ.get('CLOUDINARY_API_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["0.0.0.0", "192.168.1.7"]
 
 
 # Application definition

@@ -30,12 +30,12 @@
 
 <body>
 
-  <!-- header section strats -->
+  <!-- header section starts -->
   <header class="header_section">
     <div class="container-fluid">
       <nav class="navbar navbar-expand-lg custom_nav-container">
         <a class="navbar-brand" href="{% url 'index' %}">
-            <span>Rubies Jewels</span>
+            <!-- <span>Rubies Jewels</span> -->
         </a>
         <div class="" id="">
 
@@ -54,15 +54,14 @@
     <div class="container">
       <div class="col-md-9 col-lg-8">
         <div class="detail-box">
-          <h2>
-            <br>
-            <br>
-            <br>
-            Welcome to Rubies Jewels
-          </h2>
-          <p>
-            We offer a wide range of high quality jewelry at affordable prices.
-          </p>
+          <h1 class="main-title" style="font-family: Poppins, sans-serif;">
+            RUBIES JEWELS
+          </h1>
+          <div class="category-links">
+            {% for category in categories %}
+              <a href="{% url 'shop_category' category.id %}">{{ category.name }}</a>
+            {% endfor %}
+          </div>
           <div>
             <a href="{% url 'shop' %}" class="slider-link">
               Shop Now
@@ -74,43 +73,41 @@
   </section>
   <!-- end slider section -->
 
-<!-- shop section -->
-<section class="shop_section layout_padding">
-  <div class="container">
-    <div class="heading_container heading_center">
-      <h2>Latest Products</h2>
-    </div>
-    <div class="product-container">
-      {% for product in products %}
-        <div class="col-sm-6 col-md-4 col-lg-3 product-item">
-          <div class="box">
-            <a href="{% url 'product' product.id %}">
-              <div class="img-box">
-                <img src="{{ product.main_image.image.url }}" loading="lazy" alt="">
-              </div>
-              <div class="detail-box">
-                <a>{{ product.name }}</a>
-                <span>{{ product.price }} EGP</span>
-              </div>
-              <div class="new">
-                <span>New</span>
-              </div>
-            </a>
+  <!-- shop section -->
+  <section class="shop_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>Latest Products</h2>
+      </div>
+      <div class="product-container">
+        {% for product in products %}
+          <div class="col-sm-6 col-md-4 col-lg-3 product-item">
+            <div class="box">
+              <a href="{% url 'product' product.id %}">
+                <div class="img-box">
+                  <img src="{{ product.main_image.image.url }}" loading="lazy" alt="">
+                </div>
+                <div class="detail-box">
+                  <a>{{ product.name }}</a>
+                  <span>{{ product.price }} EGP</span>
+                </div>
+                <div class="new">
+                  <span>New</span>
+                </div>
+              </a>
+            </div>
           </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
+      </div>
+      <div class="btn-box">
+        <a href="{% url 'shop' %}">View All Products</a>
+      </div>
     </div>
-    <div class="btn-box">
-      <a href="{% url 'shop' %}">View All Products</a>
-    </div>
-  </div>
-</section>
-
+  </section>
   <!-- end shop section -->
 
   <!-- about section -->
-
-  <section class="about_section  ">
+  <section class="about_section">
     <div class="container">
       <div class="row">
         <div class="col-md-6">
@@ -136,84 +133,75 @@
       </div>
     </div>
   </section>
-
   <!-- end about section -->
-  <section>
-    <div>
-      <br>
-    </div>
-  </section>
 
-  
-<!-- info section -->
-<section class="info_section layout_padding2">
-  <div class="container">
-    <div class="row info_form_social_row">
-      <div class="col-md-8 col-lg-9">
-        <!-- Empty Bar -->
-        <div class="empty_bar"></div>
-      </div>
-      <div class="col-md-4 col-lg-3">
-        <div class="social_box">
-          <a href="https://www.facebook.com/people/Rubies-Jewels/61558642868319/">
-            <i class="fa fa-facebook" aria-hidden="true"></i>
-          </a>
-          <a href="https://www.instagram.com/rubiesjewelss/">
-            <i class="fa fa-instagram" aria-hidden="true"></i>
-          </a>
+  <!-- info section -->
+  <section class="info_section layout_padding2">
+    <div class="container">
+      <div class="row info_form_social_row">
+        <div class="col-md-8 col-lg-9">
+          <!-- Empty Bar -->
+          <div class="empty_bar"></div>
         </div>
-      </div>
-    </div>
-    <div class="row info_main_row">
-      <div class="col-md-6 col-lg-3">
-        <div class="info_links">
-          <h4>
-            Menu
-          </h4>
-          <div class="info_links_menu">
-            <a href="{% url 'index' %}">Home</a>
-            <a href="{% url 'about' %}">About</a>
-            <a href="{% url 'shop' %}">Shop</a>
+        <div class="col-md-4 col-lg-3">
+          <div class="social_box">
+            <a href="https://www.facebook.com/people/Rubies-Jewels/61558642868319/">
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.instagram.com/rubiesjewelss/">
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </a>
           </div>
         </div>
       </div>
+      <div class="row info_main_row">
+        <div class="col-md-6 col-lg-3">
+          <div class="info_links">
+            <h4>
+              Menu
+            </h4>
+            <div class="info_links_menu">
+              <a href="{% url 'index' %}">Home</a>
+              <a href="{% url 'about' %}">About</a>
+              <a href="{% url 'shop' %}">Shop</a>
+            </div>
+          </div>
+        </div>
 
-      <div class="col-md-6 col-lg-3">
-        <h4>
-          Contact Us
-        </h4>
-        <div class="info_contact">
-          <a href="">
-            <i class="fa fa-map-marker" aria-hidden="true"></i>
-            <span>
-              Sheikh Zayed, Giza, Egypt
-            </span>
-          </a>
-          <a href="mailto:support@rubiesjewels.com">
-            <i class="fa fa-envelope"></i>
-            <span>
-              support@rubiesjewels.com
-            </span>
-          </a>
+        <div class="col-md-6 col-lg-3">
+          <h4>
+            Contact Us
+          </h4>
+          <div class="info_contact">
+            <a href="https://maps.app.goo.gl/pb2kjtUn23BQvP1T6">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <span>
+                Sheikh Zayed, Giza, Egypt
+              </span>
+            </a>
+            <a href="mailto:support@rubiesjewels.com">
+              <i class="fa fa-envelope"></i>
+              <span>
+                support@rubiesjewels.com
+              </span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<!-- end info_section -->
-
+  </section>
+  <!-- end info section -->
 
   <!-- footer section -->
   <footer class="footer_section">
     <div class="container">
       <p>
         &copy; <span id="displayYear">{{ year }}</span> All Rights Reserved By
-        <a>Rubies Jewels</a>
+        <a>Rubies Jewels</a> | Developed by <a href="https://www.linkedin.com/in/mohamed-gomaa-1a8540287/">Mohamed Gomaa</a>
       </p>
     </div>
   </footer>
   <!-- footer section -->
-
 
   <!-- jQuery -->
   <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
@@ -223,5 +211,4 @@
   <script src="{% static 'js/custom.js' %}"></script>
 
 </body>
-
 </html>

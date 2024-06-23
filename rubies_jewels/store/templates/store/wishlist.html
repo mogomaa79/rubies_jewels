@@ -20,7 +20,7 @@
                     <img src="{{ product.main_image.image.url }}" alt="{{ product.name }}" class="wishlist-thumbnail">
                 </div>
                 <div class="col-md-6 product-details-wishlist">
-                    <p class="product-name-wishlist">{{ product.name }}</p>
+                    <a href="{% url 'product' product.id %}" class="product-name-wishlist">{{ product.name }}</a>
                     <p class="product-price-wishlist">{{ product.price }} EGP</p>
                 </div>
                 <div class="col-md-3 actions-wishlist">
@@ -28,6 +28,7 @@
                         {% csrf_token %}
                         <button type="submit" name="action" value="add_to_cart" class="btn btn-add-to-cart">Add to Cart</button>
                         <button type="submit" name="action" value="buy_now" class="btn btn-buy-now">Buy Now</button>
+                        <button type="submit" name="action" value="remove_from_wishlist" class="btn btn-remove">Remove</button>
                     </form>
                 </div>
             </div>

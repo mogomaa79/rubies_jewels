@@ -30,6 +30,7 @@ admin.site.register(Image, ImageAdmin)
 admin.site.register(User)
 admin.site.register(Coupon)
 admin.site.register(OrderItem)
+admin.site.register(Cart)
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem

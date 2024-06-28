@@ -1,6 +1,6 @@
-# Rubies & Jewels
+# Rubies Jewels
 
-Welcome to Rubies & Jewels, a Django-based project for a jewelry shopping startup. This repository contains the source code for the Rubies & Jewels website, allowing customers to browse and purchase a variety of jewelry items.
+Welcome to Rubies Jewels, a Django-based project for a jewelry shopping startup. This repository contains the source code for the Rubies Jewels website, allowing customers to browse and purchase a variety of jewelry items.
 
 ## Table of Contents
 
@@ -96,5 +96,5 @@ For questions, suggestions, or support, please contact us at:
 - Email: support@rubiesjewels.com
 - GitHub: [mogomaa79](https://github.com/mogomaa79)
 
-We hope you enjoy using Rubies & Jewels! Happy shopping!
+We hope you enjoy using Rubies Jewels! Happy shopping!
 

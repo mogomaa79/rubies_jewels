@@ -69,24 +69,38 @@
               </div>
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  {{ form.password1.label_tag }}
-                  {{ form.password1 }}
-                  {% if form.password1.errors %}
-                    <div class="alert alert-danger mt-2">
-                      {{ form.password1.errors|striptags }}
+                    {{ form.password1.label_tag }}
+                    <div class="input-group">
+                        {{ form.password1 }}
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword1">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
-                  {% endif %}
+                    {% if form.password1.errors %}
+                        <div class="alert alert-danger mt-2">
+                            {{ form.password1.errors|striptags }}
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="col-md-6 mb-3">
-                  {{ form.password2.label_tag }}
-                  {{ form.password2 }}
-                  {% if form.password2.errors %}
-                    <div class="alert alert-danger mt-2">
-                      {{ form.password2.errors|striptags }}
+                    {{ form.password2.label_tag }}
+                    <div class="input-group">
+                        {{ form.password2 }}
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword2">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
-                  {% endif %}
+                    {% if form.password2.errors %}
+                        <div class="alert alert-danger mt-2">
+                            {{ form.password2.errors|striptags }}
+                        </div>
+                    {% endif %}
                 </div>
-              </div>
+            </div>
               <div class="form-group form-check mb-3">
                 <input type="checkbox" class="form-check-input" id="termsCheck" required>
                 <label class="form-check-label" for="termsCheck">I accept the <a href="#">Terms of Use & Privacy Policy</a>.</label>
@@ -113,4 +127,33 @@
     </div>
   </div>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const togglePassword1 = document.getElementById('togglePassword1');
+      const password1 = document.getElementById('{{ form.password1.id_for_label }}');
+      const togglePassword2 = document.getElementById('togglePassword2');
+      const password2 = document.getElementById('{{ form.password2.id_for_label }}');
+  
+      togglePassword1.addEventListener('mousedown', function () {
+          password1.type = 'text';
+      });
+      togglePassword1.addEventListener('mouseup', function () {
+          password1.type = 'password';
+      });
+      togglePassword1.addEventListener('mouseleave', function () {
+          password1.type = 'password';
+      });
+  
+      togglePassword2.addEventListener('mousedown', function () {
+          password2.type = 'text';
+      });
+      togglePassword2.addEventListener('mouseup', function () {
+          password2.type = 'password';
+      });
+      togglePassword2.addEventListener('mouseleave', function () {
+          password2.type = 'password';
+      });
+  });
+  </script>
 {% endblock %}
